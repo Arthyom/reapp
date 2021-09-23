@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class GeneralListComponent implements OnInit {
 
   @Input() items: any[];
+  @Input() listTitle = 'List Title';
   constructor() { }
 
   ngOnInit() { }

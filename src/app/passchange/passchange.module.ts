@@ -7,9 +7,11 @@ import { IonicModule } from '@ionic/angular';
 import { PasschangePageRoutingModule } from './passchange-routing.module';
 
 import { PasschangePage } from './passchange.page';
+import { CoreModule } from '../core/core-module.module';
 
 @NgModule({
   imports: [
+    CoreModule,
     CommonModule,
     FormsModule,
     IonicModule,
@@ -17,4 +19,4 @@ import { PasschangePage } from './passchange.page';
   ],
   declarations: [PasschangePage]
 })
-export class PasschangePageModule {}
+export class PasschangePageModule { }

@@ -1,9 +1,23 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>home-dash</ion-title>
-  </ion-toolbar>
+  <app-general-banner></app-general-banner>
+  <app-menubar (selectedTabEmitter)="moveTo($event)"></app-menubar>
 </ion-header>
 
 <ion-content>
+  <ion-slides mode="md" style="width: 100%">
+    <ion-slide>
+      <app-general-list
+        style="width: 100%; background-color: gray"
+        [items]="items"
+      ></app-general-list>
+    </ion-slide>
 
+    <ion-slide> </ion-slide>
+
+    <ion-slide> </ion-slide>
+
+    <ion-slide>
+      <app-general-list style="width: 100%" [items]="items"></app-general-list>
+    </ion-slide>
+  </ion-slides>
 </ion-content>

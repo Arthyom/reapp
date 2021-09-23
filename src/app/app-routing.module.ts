@@ -13,7 +13,7 @@ const routes: Routes = [
     loadChildren: () => import('./login-register/login-register.module').then(m => m.LoginRegisterPageModule)
   },
   {
-    path: 'home-dash',
+    path: 'home',
     loadChildren: () => import('./home-dash/home-dash.module').then(m => m.HomeDashPageModule)
   },
   {

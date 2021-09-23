@@ -1,9 +1,9 @@
-<ion-list>
-  <ion-item *ngFor="let item of items">
+<ion-list style="width: 100% !important" style="background-color: gray">
+  <ion-card *ngFor="let item of items">
     <app-general-item>
       <p class="red" ng-if="item.apellidos?">{{ item.apellidos }}</p>
       <p class="green" ng-if="item.nombre?">{{ item.nombre }}</p>
       <p class="blue" ng-if="item.nombre?">{{ item.nombre }}</p>
     </app-general-item>
-  </ion-item>
+  </ion-card>
 </ion-list>
