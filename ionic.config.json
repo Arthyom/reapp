@@ -1,0 +1,7 @@
+{
+  "name": "SICAP_Socio",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

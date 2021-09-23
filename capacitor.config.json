@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "SICAP_Socio",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
