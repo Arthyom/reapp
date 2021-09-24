@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonSlide, IonSlides } from '@ionic/angular';
 
 @Component({
   selector: 'app-login-register',
@@ -7,10 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginRegisterPage implements OnInit {
 
+  @ViewChild(IonSlides) slides: IonSlides;
   infos: any[] = [{ nombre: 'alfredo' }, { nombre: 'alfredo', apellidos: 'gonzale' }];
   constructor() { }
 
+
   ngOnInit() {
+
   }
+
+
+
+
 
 }

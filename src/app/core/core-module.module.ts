@@ -6,16 +6,19 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { GeneralAuthComponent } from './general-auth/general-auth/general-auth.component';
 import { GeneralBannerComponent } from './general-banner/general-banner/general-banner.component';
+import { GeneralPopComponent } from './general-pop/general-pop/general-pop.component';
+import { RouterModule } from '@angular/router';
 
 
 
 @NgModule({
-  declarations: [GeneralListComponent, GeneralItemComponent, GeneralAuthComponent, GeneralBannerComponent],
+  declarations: [GeneralPopComponent, GeneralListComponent, GeneralItemComponent, GeneralAuthComponent, GeneralBannerComponent],
   imports: [
+    RouterModule,
     CommonModule,
     FormsModule,
     IonicModule,
   ],
-  exports: [GeneralListComponent, GeneralItemComponent, GeneralAuthComponent, GeneralBannerComponent]
+  exports: [GeneralPopComponent, GeneralListComponent, GeneralItemComponent, GeneralAuthComponent, GeneralBannerComponent]
 })
 export class CoreModule { }

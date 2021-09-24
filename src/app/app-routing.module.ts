@@ -5,11 +5,11 @@ const routes: Routes = [
 
   {
     path: '',
-    redirectTo: 'login-register',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
   {
-    path: 'login-register',
+    path: 'login',
     loadChildren: () => import('./login-register/login-register.module').then(m => m.LoginRegisterPageModule)
   },
   {
@@ -27,6 +27,10 @@ const routes: Routes = [
   {
     path: 'passchange',
     loadChildren: () => import('./passchange/passchange.module').then(m => m.PasschangePageModule)
+  },
+  {
+    path: 'myprofile',
+    loadChildren: () => import('./my-profile/my-profile.module').then(m => m.MyProfilePageModule)
   },
 ];
 

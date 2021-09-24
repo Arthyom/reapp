@@ -1,8 +1,45 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Header</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
-  <app-general-banner></app-general-banner>
+  <ion-slides
+    style="width: 100%; height: 100%"
+    mode="ios"
+    pager="ios"
+    scrollbar="ios"
+  >
+    <ion-slide style="width: 100%; height: 100%">
+      <app-general-auth
+        [cancel]="false"
+        (okEmit)="slides.slideNext()"
+        (clEmit)="slides.slidePrev()"
+      >
+        <ion-row class="registrar">
+          <ion-label>¿Quieres usar la app de SICAP?</ion-label>
+          <ion-button fill="clear" (click)="slides.slideNext()">
+            registrate
+          </ion-button>
+        </ion-row>
+      </app-general-auth>
+    </ion-slide>
 
-  <a routerLink="/login-register">gooo</a>
-  <app-general-list [items]="infos"></app-general-list>
-
-  <app-general-auth></app-general-auth>
+    <ion-slide style="width: 100%; height: 100%">
+      <app-general-auth
+        [cancel]="true"
+        [imei]="true"
+        (clEmit)="slides.slidePrev()"
+        (okEmit)="slides.slidePrev()"
+      >
+        <ion-item class="telefono">
+          <ion-label position="floating"
+            >Telefono <ion-text color="danger">*</ion-text></ion-label
+          >
+          <ion-input required type="text"></ion-input>
+        </ion-item>
+      </app-general-auth>
+    </ion-slide>
+  </ion-slides>
 </ion-content>

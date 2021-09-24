@@ -1,6 +1,9 @@
 <ion-item lines="full">
+  <ion-avatar slot="start">
+    <img src="assets/shapes.svg" />
+  </ion-avatar>
   <ion-label>Awesome Label</ion-label>
-  <ion-button slot="end" fill="clear">
+  <ion-button slot="end" fill="clear" (click)="presentPopOver($event)">
     <ion-icon slot="icon-only" name="menu"></ion-icon>
   </ion-button>
 </ion-item>
