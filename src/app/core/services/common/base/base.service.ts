@@ -1,10 +1,21 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { ConfigsService } from '../configs/configs.service';
 
 
 export abstract class BaseService {
 
   protected url: string;
+
+  public set config(configs: any) {
+    this.settings.decriptedSettings = configs;
+    for (const key in configs) {
+      if (Object.prototype.hasOwnProperty.call(configs, key)) {
+        const element = btoa(configs[key]);
+        this.settings.encryptedSettings[key] = element;
+      }
+    }
+  }
 
   /**
    * Use the base service to create your services
@@ -13,7 +24,7 @@ export abstract class BaseService {
    * @param settings  Application settings
    * @param resource  Target service to send a request
    */
-  constructor(protected readonly http: HttpClient, protected settings: any, resource: string) {
+  constructor(protected readonly http: HttpClient, protected settings: ConfigsService, resource: string) {
     this.url = `${environment.baseUrl}/${resource}`;
   }
 
@@ -22,7 +33,7 @@ export abstract class BaseService {
    *
    * @param params [params] Any data to be sent to the server
    */
-  protected get(params: HttpParams | { [param: string]: string | string[] }) {
+  public get(params: HttpParams | { [param: string]: string | string[] }) {
 
   }
 
@@ -32,7 +43,7 @@ export abstract class BaseService {
    *
    * @param data [data] Any data to be sent to the server
    */
-  protected post(data: any = null) {
+  public post(data: any = null) {
     return this.http.post(this.url, data);
   }
 

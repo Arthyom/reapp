@@ -13,8 +13,9 @@
   >
     <ion-slide style="width: 100%; height: 100%">
       <app-general-auth
+        routerLink="/home"
         [cancel]="false"
-        (okEmit)="slides.slideNext()"
+        (okEmit)="login()"
         (clEmit)="slides.slidePrev()"
       >
         <ion-row class="registrar">

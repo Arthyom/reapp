@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonSlides } from '@ionic/angular';
+import { HomeDashServicesService } from './services/homeDashServices/home-dash-services.service';
+import { ConfigsService } from '../core/services/common/configs/configs.service';
 
 @Component({
   selector: 'app-home-dash',
@@ -15,9 +17,10 @@ export class HomeDashPage implements OnInit {
     { nombre: 'alfredo' }, { nombre: 'alfredo', apellido: 'gonzalez' }
 
   ];
-  constructor() { }
+  constructor(protected homeService: HomeDashServicesService) { }
 
   ngOnInit() {
+    console.log('my servicio', this.homeService.config);
   }
 
   moveTo(index: number) {

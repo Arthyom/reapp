@@ -8,6 +8,7 @@ import { GeneralAuthComponent } from './general-auth/general-auth/general-auth.c
 import { GeneralBannerComponent } from './general-banner/general-banner/general-banner.component';
 import { GeneralPopComponent } from './general-pop/general-pop/general-pop.component';
 import { RouterModule } from '@angular/router';
+import { ConfigsService } from './services/common/configs/configs.service';
 
 
 
