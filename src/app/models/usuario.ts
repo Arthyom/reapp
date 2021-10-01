@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 export interface Usuario {
-  status: string;
-  token: string;
-  idUsuario: string;
-  nombre: string;
+  usuario: any;
+  Ok?: string;
+  Status: string;
+  Token: string;
+  IdUsuario: string;
+  Nombre: string;
 }

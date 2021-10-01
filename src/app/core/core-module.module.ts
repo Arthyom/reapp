@@ -9,17 +9,23 @@ import { GeneralBannerComponent } from './general-banner/general-banner/general-
 import { GeneralPopComponent } from './general-pop/general-pop/general-pop.component';
 import { RouterModule } from '@angular/router';
 import { ConfigsService } from './services/common/configs/configs.service';
+import { LoadingModalComponent } from './loading-modal/loading-modal/loading-modal.component';
 
 
 
 @NgModule({
-  declarations: [GeneralPopComponent, GeneralListComponent, GeneralItemComponent, GeneralAuthComponent, GeneralBannerComponent],
+  declarations: [
+    LoadingModalComponent,
+    GeneralPopComponent, GeneralListComponent, GeneralItemComponent, GeneralAuthComponent, GeneralBannerComponent],
   imports: [
     RouterModule,
     CommonModule,
     FormsModule,
     IonicModule,
   ],
-  exports: [GeneralPopComponent, GeneralListComponent, GeneralItemComponent, GeneralAuthComponent, GeneralBannerComponent]
+  exports: [
+    LoadingModalComponent,
+
+    GeneralPopComponent, GeneralListComponent, GeneralItemComponent, GeneralAuthComponent, GeneralBannerComponent]
 })
 export class CoreModule { }

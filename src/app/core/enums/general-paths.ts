@@ -1,5 +1,5 @@
 export enum GeneralPaths {
-  login = 'login.php',
+  login = 'login',
   registro = 'registrar.php',
   saldos = 'saldos.php',
   movimientos = 'movimientos.php',

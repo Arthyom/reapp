@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonSlides } from '@ionic/angular';
 import { HomeDashServicesService } from './services/homeDashServices/home-dash-services.service';
 import { ConfigsService } from '../core/services/common/configs/configs.service';
+import { loadingController } from '@ionic/core';
+import { LoadingModalComponent } from '../core/loading-modal/loading-modal/loading-modal.component';
 
 @Component({
   selector: 'app-home-dash',
@@ -17,10 +19,28 @@ export class HomeDashPage implements OnInit {
     { nombre: 'alfredo' }, { nombre: 'alfredo', apellido: 'gonzalez' }
 
   ];
+
+
   constructor(protected homeService: HomeDashServicesService) { }
 
   ngOnInit() {
-    console.log('my servicio', this.homeService.config);
+
+    this.homeService.guiService.showGenericPop({
+      component: LoadingModalComponent
+    });
+    this.homeService.post({}).subscribe(() => {
+      setTimeout(() => {
+        this.homeService.guiService.genericPopPresenter.dismiss();
+      });
+
+
+
+
+
+
+
+
+    });
   }
 
   moveTo(index: number) {

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'sicap adafafa ',
+  baseUrl: 'http://localhost/test',
 };
 
 /*
