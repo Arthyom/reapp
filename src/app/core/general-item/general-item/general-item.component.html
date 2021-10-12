@@ -1,14 +1,22 @@
-<ion-row>
-  <ion-col size="3">
-    <ion-avatar>
-      <img src="assets/shapes.svg" />
-    </ion-avatar>
-  </ion-col>
-  <ion-col>
-    <ion-card-header>
-      <ion-card-subtitle>Awesome Subtitle</ion-card-subtitle>
-      <ion-card-title>Awesome Title</ion-card-title>
-    </ion-card-header>
-    <ion-card-content> Awesome content </ion-card-content>
-  </ion-col>
-</ion-row>
+<ion-card (click)="onItemClick()">
+  <ion-card-header class="ion-no-padding ion-no-margin">
+    <ion-item style="background-color: none">
+      <ion-label slot="start">{{ item.Clasificacion }}</ion-label>
+      <ion-label slot="end">
+        Cuenta: <ion-text color="primary">{{ item.Cuenta }}</ion-text>
+      </ion-label>
+    </ion-item>
+  </ion-card-header>
+  <ion-card-content class="ion-no-margin ion-text-left">
+    <ion-label>
+      Saldo Disponible: <ion-text color="primary"> {{ item.Saldo }}</ion-text>
+    </ion-label>
+
+    {{ item.Servicio }}
+
+    <ion-item lines="full">
+      <ion-label>{{ item.Interes }}</ion-label>
+    </ion-item>
+  </ion-card-content>
+  <ion-ripple-effect></ion-ripple-effect>
+</ion-card>

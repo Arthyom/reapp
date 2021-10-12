@@ -1,11 +1,15 @@
-<form>
-  <ng-content select=".telefono"></ng-content>
-
-  <ion-item>
+<form [formGroup]="authForm">
+  <ion-item *ngIf="showRegisForm">
     <ion-label position="floating"
-      >E-Mail <ion-text color="danger">*</ion-text></ion-label
+      >Telefono <ion-text color="danger">*</ion-text></ion-label
     >
-    <ion-input required type="text"></ion-input>
+    <ion-input formControlName="telefono" type="text"></ion-input>
+  </ion-item>
+  <ion-item *ngIf="showLoginForm || showRegisForm || showValidForm">
+    <ion-label position="floating"
+      >Usuario <ion-text color="danger">*</ion-text></ion-label
+    >
+    <ion-input formControlName="usuario" type="text"></ion-input>
   </ion-item>
 
   <ion-item>
@@ -27,15 +31,56 @@
       ></ion-icon>
     </ion-button>
 
-    <ion-input type="password" #PassInput class="form-controll"></ion-input>
+    <ion-input
+      formControlName="pass"
+      [debounce]="debounce"
+      type="password"
+      #PassInput
+      class="form-controll"
+    ></ion-input>
   </ion-item>
 
-  <ion-label *ngIf="imei">IMEI {{ "34KL23K2L23O4O0" }}</ion-label>
-  <ng-content select=".registrar"></ng-content>
+  <ion-item *ngIf="showChangeForm">
+    <ion-label position="floating" color="primary" class="ion-margin-top"
+      >Contraseña</ion-label
+    >
+    <ion-button
+      (click)="changePass(PassIcon2, PassInput2)"
+      slot="end"
+      fill="clear"
+      shape="round"
+      class="ion-margin-top"
+    >
+      <ion-icon
+        slot="icon-only"
+        #PassIcon2
+        color="primary"
+        name="eye"
+      ></ion-icon>
+    </ion-button>
+
+    <ion-input
+      formControlName="conf"
+      [debounce]="debounce"
+      type="password"
+      #PassInput2
+      class="form-controll"
+    ></ion-input>
+  </ion-item>
+
+  <ion-label *ngIf="showRegisForm">IMEI {{ "34KL23K2L23O4O0" }}</ion-label>
+
+  <ng-content *ngIf="showLoginForm" select=".registrar"></ng-content>
 
   <ion-row>
     <ion-col>
-      <ion-button block color="primary" type="submit" (click)="okEmit.emit()">
+      <ion-button
+        [disabled]="authForm.invalid"
+        block
+        color="primary"
+        type="submit"
+        (click)="okEmit.emit()"
+      >
         Entrar
       </ion-button>
     </ion-col>

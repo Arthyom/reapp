@@ -13,8 +13,7 @@
   >
     <ion-slide style="width: 100%; height: 100%">
       <app-general-auth
-        routerLink="/home"
-        [cancel]="false"
+        [showLoginForm]="true"
         (okEmit)="login()"
         (clEmit)="slides.slidePrev()"
       >
@@ -30,7 +29,7 @@
     <ion-slide style="width: 100%; height: 100%">
       <app-general-auth
         [cancel]="true"
-        [imei]="true"
+        [showRegisForm]="true"
         (clEmit)="slides.slidePrev()"
         (okEmit)="slides.slidePrev()"
       >

@@ -1,9 +1,8 @@
 <ion-list style="width: 100% !important" style="background-color: gray">
-  <ion-card *ngFor="let item of items">
-    <app-general-item>
-      <p class="red" ng-if="item.apellidos?">{{ item.apellidos }}</p>
-      <p class="green" ng-if="item.nombre?">{{ item.nombre }}</p>
-      <p class="blue" ng-if="item.nombre?">{{ item.nombre }}</p>
-    </app-general-item>
-  </ion-card>
+  <app-general-item
+    *ngFor="let item of items"
+    class="ion-activatable ripple-parent"
+    [item]="item"
+  >
+  </app-general-item>
 </ion-list>

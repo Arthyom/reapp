@@ -4,6 +4,8 @@ import { HomeDashServicesService } from './services/homeDashServices/home-dash-s
 import { ConfigsService } from '../core/services/common/configs/configs.service';
 import { loadingController } from '@ionic/core';
 import { LoadingModalComponent } from '../core/loading-modal/loading-modal/loading-modal.component';
+import { buttonToolbarHeaders } from './menubar/menubar/models/buttonToolbarHeader';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-dash',
@@ -13,15 +15,14 @@ import { LoadingModalComponent } from '../core/loading-modal/loading-modal/loadi
 export class HomeDashPage implements OnInit {
 
   @ViewChild(IonSlides) mainSlides: IonSlides;
-  items: any = [
-    { nombre: 'alfredo' }, { nombre: 'alfredo', apellido: 'gonzalez' },
-    { nombre: 'alfredo' }, { nombre: 'alfredo', apellido: 'gonzalez' },
-    { nombre: 'alfredo' }, { nombre: 'alfredo', apellido: 'gonzalez' }
-
-  ];
+  items: any[];
+  slides = buttonToolbarHeaders;
 
 
-  constructor(protected homeService: HomeDashServicesService) { }
+  constructor(
+    protected homeService: HomeDashServicesService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
 
@@ -43,8 +44,14 @@ export class HomeDashPage implements OnInit {
     });
   }
 
-  moveTo(index: number) {
-    this.mainSlides.slideTo(index);
+  async moveTo(buttonInfo: any) {
+    this.mainSlides.slideTo(buttonInfo.index);
+    this.items = await this.homeService.post<any[]>({}, buttonInfo.target).toPromise();
+  }
+
+  detailsOf(item: any) {
+    this.router.navigate(['transactions']);
+    console.log('ir a la pagina de carga');
   }
 
 }

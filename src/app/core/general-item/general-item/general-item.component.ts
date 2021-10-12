@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-general-item',
@@ -7,8 +7,14 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class GeneralItemComponent implements OnInit {
 
+  @Input() item: any;
+  @Output() itemClicked: EventEmitter<any> = new EventEmitter<any>();
   constructor() { }
 
   ngOnInit() { }
+
+  onItemClick() {
+    this.itemClicked.emit(this.item);
+  }
 
 }

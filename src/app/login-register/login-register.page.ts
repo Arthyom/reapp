@@ -3,8 +3,11 @@ import { IonSlide, IonSlides } from '@ionic/angular';
 import { LoginService } from './services/login.service';
 import { RegisterService } from './services/register.service';
 import { ConfigsService } from '../core/services/common/configs/configs.service';
-import { Usuario } from '../models/usuario';
 import { LoadingModalComponent } from '../core/loading-modal/loading-modal/loading-modal.component';
+import { UsuarioResponse } from '../core/models/responses/usuarioResponse';
+import { UsuarioRequest } from '../core/models/requests/usuarioRequest';
+import { RegistrosRequest } from '../core/models/requests/registerRequest';
+import { GeneralResponse } from '../core/models/responses/generalResponse';
 
 
 @Component({
@@ -15,9 +18,8 @@ import { LoadingModalComponent } from '../core/loading-modal/loading-modal/loadi
 export class LoginRegisterPage implements OnInit {
 
   @ViewChild(IonSlides) slides: IonSlides;
-  infos: any[] = [{ nombre: 'alfredo' }, { nombre: 'alfredo', apellidos: 'gonzale' }];
-  userToLog: Usuario;
-  userToReg: Usuario;
+  userToLog: UsuarioRequest = { imei: '1323232', pwd: 'adadada', token: 'fdkfkdkfd', usuario: 'juvencio' };
+  userToReg: RegistrosRequest;
   constructor(
     protected loginService: LoginService,
     private registerService: RegisterService
@@ -28,7 +30,7 @@ export class LoginRegisterPage implements OnInit {
 
   }
 
-  async login() {
+  login() {
     //this.loginService.guiService.showGenericPop({
     //component: LoadingModalComponent
     //});
@@ -36,7 +38,7 @@ export class LoginRegisterPage implements OnInit {
 
       setTimeout(async () => {
 
-        const response = await this.loginService.post<Usuario>(this.userToLog).toPromise();
+        const response = await this.loginService.post<UsuarioResponse>(this.userToLog).toPromise();
         console.log('respuesta ', response);
         if (this.loginService.authUser(response)) {
           //this.loginService.guiService.genericPopPresenter.dismiss();
@@ -55,7 +57,7 @@ export class LoginRegisterPage implements OnInit {
 
   async register() {
     try {
-      const response = await this.registerService.post<Usuario>(this.userToReg).toPromise();
+      const response = await this.registerService.post<GeneralResponse>(this.userToReg).toPromise();
 
     } catch (error) { }
   }

@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { GeneralPaths } from '../../core/enums/general-paths';
 import { ConfigsService } from '../../core/services/common/configs/configs.service';
 import { GUIService } from '../../core/services/common/GUI/gui.service';
-import { Usuario } from '../../models/usuario';
+import { UsuarioResponse } from '../../core/models/responses/usuarioResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +17,10 @@ export class LoginService extends BaseService {
     super(http, configs, GeneralPaths.login, guiService);
   }
 
-  authUser(userToAuth: Usuario) {
+  authUser(userToAuth: UsuarioResponse) {
     userToAuth = userToAuth?.usuario ? userToAuth.usuario : userToAuth;
 
-    if (userToAuth?.Status === 'Ok') {
+    if (userToAuth?.status === 'Ok') {
       this.activeUser = userToAuth;
       return true;
     }

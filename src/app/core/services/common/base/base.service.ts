@@ -2,15 +2,18 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ConfigsService } from '../configs/configs.service';
 
-import { catchError, debounce, delay, delayWhen, map, mergeMap, retry, retryWhen, scan, take, tap } from 'rxjs/operators';
+import { catchError, debounce, delay, delayWhen, map, mergeMap, reduce, retry, retryWhen, scan, take, tap } from 'rxjs/operators';
 import { asyncScheduler, EMPTY, from, interval, Observable, observable, of, scheduled, throwError } from 'rxjs';
 import { GUIService } from '../GUI/gui.service';
+import { RequestGeneralConfs } from '../../../models/configs/requestGeneralConfs';
+import { lowExclutions, uppExclutions } from '../../../models/upperCaseExclutions';
+import { inject } from '@angular/core';
 
 export abstract class BaseService {
 
   protected url: string;
 
-  public set config(configs: any) {
+  public set config(configs: RequestGeneralConfs) {
     this.settings.decriptedSettings = configs;
     this.settings.encryptedSettings = this.encodeData(configs);
   }
@@ -18,6 +21,8 @@ export abstract class BaseService {
   public set activeUser(user) {
     this.settings.activeUser = user;
   }
+
+
 
   /**
    * Use the base service to create your services
@@ -50,17 +55,37 @@ export abstract class BaseService {
    *
    * @param data [data] Any data to be sent to the server
    */
-  public post<T>(body: any = null) {
+  public post<T>(body: any = null, resource: string = null) {
+    body = this.addConfigs(body);
     body = this.encodeData(body);
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     const parsedBody = new HttpParams({ fromObject: body });
 
+    this.url = resource ? `${environment.baseUrl}/${resource}` : this.url;
+
 
     return this.http.post(this.url, parsedBody).pipe(
-      retryWhen(error => this.reTry(error, 9, 2000)),
-      map((dataToMap: any) => dataToMap?.datosCaja ? dataToMap.datosCaja : dataToMap),
-      map((dataToCast: any) => dataToCast as T),
+      //   retryWhen(error => this.reTry(error, 9, 2000)),
+      /*map((dataToMap: any) => {
+         if( typeof(dataToMap) === '' )
+         console.log('revicsds ', dataToMap);
+         const mappedObject: any = {};
+         for (const key in dataToMap) {
+           if (Object.prototype.hasOwnProperty.call(dataToMap, key)) {
+             if (!lowExclutions.find((exclution) => key === exclution)) {
+               const lowKey = key[0].toLocaleLowerCase() + key.substr(1);
+               mappedObject[lowKey] = dataToMap[key];
+             }
+             else {
+               mappedObject[key] = dataToMap[key];
+             }
+           }
+         }
+         return mappedObject;
+       }),*/
+      map((dataToMap: any) => dataToMap?.datoscaja ? dataToMap.datoscaja : dataToMap),
+      map((dataToCast: any) => dataToCast as T)
     );
   }
 
@@ -85,14 +110,30 @@ export abstract class BaseService {
   }
 
   private encodeData(data: any) {
-    const encoded = {};
+    const encoded: any = {};
     for (const key in data) {
       if (Object.prototype.hasOwnProperty.call(data, key)) {
         const element = btoa(data[key]);
-        encoded[key] = element;
+        if (!uppExclutions.find((exclution) => key === exclution)) {
+          const uppKey = key[0].toUpperCase() + key.substr(1);
+          encoded[uppKey] = element;
+        }
+        else {
+          encoded[key] = element;
+        }
       }
     }
     return encoded;
   }
+
+  private addConfigs(body: any) {
+    for (const key in this.settings.decriptedSettings) {
+      if (Object.prototype.hasOwnProperty.call(this.settings.decriptedSettings, key)) {
+        body[key] = this.settings.decriptedSettings[key];
+      }
+    }
+    return body;
+  }
+
 
 }

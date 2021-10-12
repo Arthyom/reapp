@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { GeneralPopComponent } from '../../general-pop/general-pop/general-pop.component';
+import { ConfigsService } from '../../services/common/configs/configs.service';
 
 @Component({
   selector: 'app-general-banner',
@@ -10,9 +11,15 @@ import { GeneralPopComponent } from '../../general-pop/general-pop/general-pop.c
 })
 export class GeneralBannerComponent implements OnInit {
 
+  public get userName(): string {
+    return this.configService?.activeUser?.nombre || 'alfredo gonzalez gavina';
+  }
 
   popRef: HTMLIonPopoverElement;
-  constructor(public popover: PopoverController, private popComp: GeneralPopComponent) { }
+  constructor(
+    private configService: ConfigsService,
+    public popover: PopoverController,
+    private popComp: GeneralPopComponent) { }
 
   ngOnInit() {
 

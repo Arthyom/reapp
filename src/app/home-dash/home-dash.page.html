@@ -4,20 +4,17 @@
 </ion-header>
 
 <ion-content>
-  <ion-slides mode="md" style="width: 100%">
-    <ion-slide>
-      <app-general-list
-        style="width: 100%; background-color: gray"
-        [items]="items"
-      ></app-general-list>
-    </ion-slide>
-
-    <ion-slide> </ion-slide>
-
-    <ion-slide> </ion-slide>
-
-    <ion-slide>
-      <app-general-list style="width: 100%" [items]="items"></app-general-list>
+  <ion-slides mode="md" style="width: 100% !important">
+    <ion-slide *ngFor="let slide of slides" style="width: 100% !important">
+      <ion-list class="ion-no-margin" style="background-color: gray">
+        <app-general-item
+          (itemClicked)="detailsOf($event)"
+          *ngFor="let item of items"
+          class="ion-activatable ripple-parent"
+          [item]="item"
+        >
+        </app-general-item>
+      </ion-list>
     </ion-slide>
   </ion-slides>
 </ion-content>

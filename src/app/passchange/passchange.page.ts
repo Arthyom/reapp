@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { IonSlides } from '@ionic/angular';
+import { slideMessages } from './models/slideMessages';
 
 @Component({
   selector: 'app-passchange',
@@ -7,9 +9,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PasschangePage implements OnInit {
 
+  @ViewChild(IonSlides) statusSlides: IonSlides;
+
+  slideMessages = slideMessages;
   constructor() { }
 
   ngOnInit() {
+
+  }
+
+  checkStatus(event) {
+    if (this.statusSlides) {
+
+      console.log('event', event);
+      this.statusSlides.slideTo(event.index);
+    }
   }
 
 }
