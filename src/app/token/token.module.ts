@@ -7,9 +7,11 @@ import { IonicModule } from '@ionic/angular';
 import { TokenPageRoutingModule } from './token-routing.module';
 
 import { TokenPage } from './token.page';
+import { CoreModule } from '../core/core-module.module';
 
 @NgModule({
   imports: [
+    CoreModule,
     CommonModule,
     FormsModule,
     IonicModule,
@@ -17,4 +19,4 @@ import { TokenPage } from './token.page';
   ],
   declarations: [TokenPage]
 })
-export class TokenPageModule {}
+export class TokenPageModule { }

@@ -1,13 +1,11 @@
 .list-md {
   width: 100% !important;
-  margin-left: 0;
-  /* margin-right: 0; */
-  padding: 20px;
-  margin-top: 0;
-  margin-bottom: 0;
-  /* padding-left: 0; */
-  /* padding-right: 0; */
-  padding-top: 8px;
-  padding-bottom: 8px;
-  background: var(--ion-item-background, var(--ion-background-color, #fff));
+
+
 }
+
+ion-slide, ion-slides{
+width: 100% !important;
+height: 100% !important;
+}
+

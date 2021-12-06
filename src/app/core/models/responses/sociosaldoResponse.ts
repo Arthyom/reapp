@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 export interface SocioSaldoResponse {
-  IdPersona: string;
-  NumeroMigrado: string;
-  Nombre: string;
-  Servicio: string;
-  Cuenta: string;
+  idPersona: string;
+  numeroMigrado: string;
+  nombre: string;
+  servicio: string;
+  cuenta: string;
 }

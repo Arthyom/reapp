@@ -4,7 +4,11 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost/test',
+  //baseUrl: 'http://localhost/test/',
+  //baseUrl: 'https://vip.sicap.mx/webservices/webservicesappyuriria.php?url=',
+  baseUrl: 'https://vip.sicap.mx/webservices/webservicesappsocioyuriria.php?url=',
+  token: 'YuririaApt*?2018Tk?',
+  imei: '869957047546065'
 };
 
 /*

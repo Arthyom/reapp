@@ -14,4 +14,12 @@ export class HomeDashServicesService extends BaseService {
     public guiService: GUIService) {
     super(http, configs, GeneralPaths.generaToken, guiService);
   }
+
+
+  public get decConfs(): any {
+    return this.configs.decriptedSettings;
+  }
+
+
+
 }

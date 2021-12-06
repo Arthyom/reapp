@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title >
+      Movimientos
+
+         Cta:
+         <ion-text color="primary">
+           {{item.cuenta}}
+         </ion-text>
+
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<div slot="fixed" style=" height: 100px; width: 100% !important; background-color: gainsboro;" >
+  <ion-grid fixed class="ion-text-center">
+    <ion-row>
+      <ion-col size="12" class="ion-no-padding">
+        {{item?.nombre | titlecase}}
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" class="ion-no-padding">
+        <ion-label  >
+          <ion-text style="font-size: 40px;" color="primary">
+            {{(item?.disponible || item.saldo) | currency}}
+          </ion-text>
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    <ion-col size="12" class="ion-text-center">
+      <ion-button style="text-transform: none;">
+        <ion-label>Periodo</ion-label>
+        <ion-select value="1" [(ngModel)]='periodo' (ionChange)="getMovements()">
+          <ion-select-option value="1">1</ion-select-option>
+          <ion-select-option value="2">2</ion-select-option>
+          <ion-select-option value="3">3</ion-select-option>
+        </ion-select>
+      </ion-button>
+    </ion-col>
+
+  </ion-grid>
+
+
+
+</div>
+
+
+<ion-content color="primary">
+
+
+
+    <ion-list color='primary' style="background-color: transparent !important;" >
+      <ion-card *ngFor="let item of items">
+
+        <app-general-item  [item]="item">
+        </app-general-item>
+      </ion-card>
+      <app-general-empty *ngIf="!items.length" ></app-general-empty>
+    </ion-list>
+
+
+
+</ion-content>

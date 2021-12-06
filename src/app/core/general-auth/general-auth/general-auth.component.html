@@ -14,8 +14,7 @@
 
   <ion-item>
     <ion-label position="floating" color="primary" class="ion-margin-top"
-      >Contraseña</ion-label
-    >
+      >Contraseña  <ion-text color="danger">*</ion-text> </ion-label  >
     <ion-button
       (click)="changePass(PassIcon, PassInput)"
       slot="end"
@@ -32,7 +31,7 @@
     </ion-button>
 
     <ion-input
-      formControlName="pass"
+      formControlName="pwd"
       [debounce]="debounce"
       type="password"
       #PassInput
@@ -42,7 +41,7 @@
 
   <ion-item *ngIf="showChangeForm">
     <ion-label position="floating" color="primary" class="ion-margin-top"
-      >Contraseña</ion-label
+      >Contraseña <ion-text color="danger">*</ion-text> </ion-label
     >
     <ion-button
       (click)="changePass(PassIcon2, PassInput2)"
@@ -60,7 +59,7 @@
     </ion-button>
 
     <ion-input
-      formControlName="conf"
+      formControlName="nwpwd"
       [debounce]="debounce"
       type="password"
       #PassInput2
@@ -68,26 +67,34 @@
     ></ion-input>
   </ion-item>
 
-  <ion-label *ngIf="showRegisForm">IMEI {{ "34KL23K2L23O4O0" }}</ion-label>
+  <ion-item lines='none' class="ion-text-center">
+    <ion-label *ngIf="showRegisForm" >
+      IMEI <ion-text color="primary">{{ imei }}</ion-text>
+    </ion-label>
+  </ion-item>
 
-  <ng-content *ngIf="showLoginForm" select=".registrar"></ng-content>
+
 
   <ion-row>
     <ion-col>
       <ion-button
         [disabled]="authForm.invalid"
-        block
+        expand='block'
         color="primary"
         type="submit"
-        (click)="okEmit.emit()"
+        (click)="emitOK()"
+        expand='block'
       >
         Entrar
       </ion-button>
     </ion-col>
     <ion-col *ngIf="cancel">
-      <ion-button block color="danger" type="submit" (click)="clEmit.emit()">
+      <ion-button expand='block' color="danger" type="submit" (click)="clEmit.emit()">
         Cancelar
       </ion-button>
     </ion-col>
   </ion-row>
+
+  <ng-content *ngIf="isCordova && imei" select=".registrar"></ng-content>
+
 </form>

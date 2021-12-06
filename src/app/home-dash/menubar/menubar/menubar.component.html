@@ -1,6 +1,6 @@
 <ion-tab-bar slot="bottom" style="height: 70px">
   <ion-tab-button
-    *ngFor="let buttonItem of buttonItems"
+    *ngFor="let buttonItem of buttonItems; let i = index"
     #ref
     (click)="selecTabButton(ref, buttonItem)"
   >
@@ -10,7 +10,7 @@
       style="font-size: 15px; border-radius: 100%; padding: 6px"
       color="danger"
       mode="ios"
-      >42</ion-badge
+      >{{ lens[buttonItem.index] }}</ion-badge
     >
   </ion-tab-button>
 </ion-tab-bar>

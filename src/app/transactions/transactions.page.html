@@ -3,8 +3,21 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>transactions</ion-title>
+    <ion-title> {{transType | titlecase }}</ion-title>
+    <ion-buttons  slot="end" *ngIf="transTypes.traspasos === transType && currentIndex === 0">
+      <ion-button  routerLink="/contacts" >
+          <ion-icon  slot="icon-only" name="person-add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content> </ion-content>
+
+<ion-content color="primary">
+  <app-general-trans-steps
+    style="height: 100% !important;"
+    [selected]='item'
+    (transEmit)="esuchar($event)"
+    [transType]="transType"
+  ></app-general-trans-steps>
+</ion-content>

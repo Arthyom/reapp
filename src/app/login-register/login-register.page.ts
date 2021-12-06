@@ -1,13 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewChildren, QueryList, AfterViewInit } from '@angular/core';
 import { IonSlide, IonSlides } from '@ionic/angular';
 import { LoginService } from './services/login.service';
 import { RegisterService } from './services/register.service';
-import { ConfigsService } from '../core/services/common/configs/configs.service';
-import { LoadingModalComponent } from '../core/loading-modal/loading-modal/loading-modal.component';
 import { UsuarioResponse } from '../core/models/responses/usuarioResponse';
 import { UsuarioRequest } from '../core/models/requests/usuarioRequest';
 import { RegistrosRequest } from '../core/models/requests/registerRequest';
 import { GeneralResponse } from '../core/models/responses/generalResponse';
+import { GeneralAuthComponent } from '../core/general-auth/general-auth/general-auth.component';
 
 
 @Component({
@@ -15,51 +14,58 @@ import { GeneralResponse } from '../core/models/responses/generalResponse';
   templateUrl: './login-register.page.html',
   styleUrls: ['./login-register.page.scss'],
 })
-export class LoginRegisterPage implements OnInit {
+export class LoginRegisterPage implements AfterViewInit {
 
   @ViewChild(IonSlides) slides: IonSlides;
-  userToLog: UsuarioRequest = { imei: '1323232', pwd: 'adadada', token: 'fdkfkdkfd', usuario: 'juvencio' };
+  @ViewChildren(GeneralAuthComponent) foms: QueryList<GeneralAuthComponent>;
+
   userToReg: RegistrosRequest;
+
   constructor(
     protected loginService: LoginService,
     private registerService: RegisterService
   ) { }
 
-
-  ngOnInit() {
-
+  ngAfterViewInit(): void {
+    this.slides.lockSwipes(true);
   }
 
-  login() {
-    //this.loginService.guiService.showGenericPop({
-    //component: LoadingModalComponent
-    //});
+  async login(event: UsuarioRequest) {
+
     try {
-
-      setTimeout(async () => {
-
-        const response = await this.loginService.post<UsuarioResponse>(this.userToLog).toPromise();
-        console.log('respuesta ', response);
-        if (this.loginService.authUser(response)) {
-          //this.loginService.guiService.genericPopPresenter.dismiss();
-          console.log('correcto adelante');
-
-        } else {
-          //this.loginService.guiService.genericPopPresenter.dismiss();
-        }
-      }, 2000);
-
-
+      const response = await this.loginService.post<UsuarioResponse>(event).toPromise();
+      console.log('dsdsd', response);
+      if (this.loginService.authUser(response, event)) {
+        return this.loginService.guiService.navigateTo('/home');
+      }
     } catch (error) {
-      this.loginService.guiService.genericPopPresenter.dismiss();
+      this.loginService.guiService.showToast({ duration: 3000, color: 'danger', message: 'error' });
     }
   }
 
-  async register() {
+  async register(event) {
     try {
-      const response = await this.registerService.post<GeneralResponse>(this.userToReg).toPromise();
-
+      const response = await this.registerService.
+      post<GeneralResponse>(event).toPromise();
+      this.cancel();
     } catch (error) { }
+  }
+
+  cancel(){
+    this.foms.forEach( (form)=> form.authForm.reset());
+    this.unlockAndPrev();
+  }
+
+  unlockAndPrev() {
+    this.slides.lockSwipes(false);
+    this.slides.slidePrev();
+    this.slides.lockSwipes(true);
+  }
+
+   unlockAndNext() {
+    this.slides.lockSwipes(false);
+    this.slides.slideNext();
+    this.slides.lockSwipes(true);
   }
 
 }

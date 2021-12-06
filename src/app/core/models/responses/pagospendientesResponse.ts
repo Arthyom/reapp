@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 export interface PagosPendientesResponse {
-  IdPersona: string;
-  NumeroMigrado: string;
-  Nombre: string;
-  Domicilio: string;
-  Telefono: string;
-  GeoReferencia: string;
-  IdPrestamo: string;
-  SaldoCapital: string;
-  InteresNormal: string;
-  InteresMoratorio: string;
-  IVA: string;
-  SaldoCapitalTotal: string;
+  idPersona: string;
+  numeroMigrado: string;
+  nombre: string;
+  domicilio: string;
+  telefono: string;
+  geoReferencia: string;
+  idPrestamo: string;
+  saldoCapital: string;
+  interesNormal: string;
+  interesMoratorio: string;
+  iva: string;
+  saldoCapitalTotal: string;
   observaciones;
 }

@@ -6,22 +6,26 @@ import { catchError, debounce, delay, delayWhen, map, mergeMap, reduce, retry, r
 import { asyncScheduler, EMPTY, from, interval, Observable, observable, of, scheduled, throwError } from 'rxjs';
 import { GUIService } from '../GUI/gui.service';
 import { RequestGeneralConfs } from '../../../models/configs/requestGeneralConfs';
-import { lowExclutions, uppExclutions } from '../../../models/upperCaseExclutions';
+import { lowExclutions, uppCases } from '../../../models/upperCaseExclutions';
 import { inject } from '@angular/core';
 
 export abstract class BaseService {
 
   protected url: string;
 
-  public set config(configs: RequestGeneralConfs) {
-    this.settings.decriptedSettings = configs;
-    this.settings.encryptedSettings = this.encodeData(configs);
+
+
+  public get configsBase(): any {
+    return this.settings.decriptedSettings;
   }
 
-  public set activeUser(user) {
-    this.settings.activeUser = user;
+  public get isLoged(): boolean {
+    if (this.settings.decriptedSettings.usuario &&
+      this.settings.decriptedSettings.idPersona &&
+      this.settings.decriptedSettings.pwd) {
+      return true;
+    }
   }
-
 
 
   /**
@@ -37,7 +41,7 @@ export abstract class BaseService {
     resource: string,
     public guiService: GUIService = null,
   ) {
-    this.url = `${environment.baseUrl}/${resource}`;
+    this.url = `${environment.baseUrl}${resource}`;
   }
 
   /**
@@ -55,36 +59,30 @@ export abstract class BaseService {
    *
    * @param data [data] Any data to be sent to the server
    */
-  public post<T>(body: any = null, resource: string = null) {
+  public post<T>(body: any = this.settings.decriptedSettings, resource: string = null, filter = true) {
     body = this.addConfigs(body);
     body = this.encodeData(body);
+
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
     const parsedBody = new HttpParams({ fromObject: body });
 
-    this.url = resource ? `${environment.baseUrl}/${resource}` : this.url;
+    this.url = resource ? `${environment.baseUrl}${resource}` : this.url;
 
+
+    if (!filter) {
+      return this.http.post(this.url, parsedBody).pipe(
+        retryWhen(error => this.reTry(error, 0, 2000)),
+        map((dataToMap: any) => this.extrarProperties(dataToMap)),
+        map((dataToCast: any) => dataToCast as T)
+      );
+    }
 
     return this.http.post(this.url, parsedBody).pipe(
-      //   retryWhen(error => this.reTry(error, 9, 2000)),
-      /*map((dataToMap: any) => {
-         if( typeof(dataToMap) === '' )
-         console.log('revicsds ', dataToMap);
-         const mappedObject: any = {};
-         for (const key in dataToMap) {
-           if (Object.prototype.hasOwnProperty.call(dataToMap, key)) {
-             if (!lowExclutions.find((exclution) => key === exclution)) {
-               const lowKey = key[0].toLocaleLowerCase() + key.substr(1);
-               mappedObject[lowKey] = dataToMap[key];
-             }
-             else {
-               mappedObject[key] = dataToMap[key];
-             }
-           }
-         }
-         return mappedObject;
-       }),*/
+      retryWhen(error => this.reTry(error, 0, 2000)),
       map((dataToMap: any) => dataToMap?.datoscaja ? dataToMap.datoscaja : dataToMap),
+      map((dataToMap: any) => dataToMap?.usuario ? dataToMap.usuario : dataToMap),
+      map((dataToMap: any) => this.extractSubProperties(dataToMap)),
       map((dataToCast: any) => dataToCast as T)
     );
   }
@@ -100,7 +98,7 @@ export abstract class BaseService {
       scan((acc, errr) => {
         if (acc > repeatTimes) {
           this.guiService.cancelAllLoading();
-          this.guiService.showAlertModalOnlyButtons(this.guiService.alertServerError);
+          //this.guiService.showAlertModalOnlyButtons(this.guiService.alertServerError);
           throw errr;
         }
         return acc + 1;
@@ -114,7 +112,7 @@ export abstract class BaseService {
     for (const key in data) {
       if (Object.prototype.hasOwnProperty.call(data, key)) {
         const element = btoa(data[key]);
-        if (!uppExclutions.find((exclution) => key === exclution)) {
+        if (uppCases.find((uppCase) => key === uppCase)) {
           const uppKey = key[0].toUpperCase() + key.substr(1);
           encoded[uppKey] = element;
         }
@@ -127,13 +125,46 @@ export abstract class BaseService {
   }
 
   private addConfigs(body: any) {
+
     for (const key in this.settings.decriptedSettings) {
       if (Object.prototype.hasOwnProperty.call(this.settings.decriptedSettings, key)) {
-        body[key] = this.settings.decriptedSettings[key];
+        if(key !== 'nombre'){
+          body[key] = this.settings.decriptedSettings[key];
+        }
       }
     }
     return body;
   }
 
+  private extractSubProperties(body: any) {
+    // convert to lower case all key from body param even it is an array
+    const lowerArray: any[] = [];
+    for (const numberKey in body) {
+      if (Object.prototype.hasOwnProperty.call(body, numberKey)) {
+        if (Number.isInteger(Number.parseInt(numberKey, 10))) {
+          const newObject: any = {};
+          const upperBody = body[numberKey];
+          for (const upperKey in upperBody) {
+            if (Object.prototype.hasOwnProperty.call(upperBody, upperKey)) {
+              const lowerKey = upperKey[0].toLocaleLowerCase() + upperKey.substr(1);
+              newObject[lowerKey] = upperBody[upperKey];
+            }
+          }
+          lowerArray.push(newObject);
+        }
+      }
+    }
+    return lowerArray.length > 1 ? lowerArray : lowerArray[0];
+  }
 
+  private extrarProperties(body: any) {
+    const newObject: any = {};
+    for (const upperKey in body) {
+      if (Object.prototype.hasOwnProperty.call(body, upperKey)) {
+        const lowerKey = upperKey[0].toLocaleLowerCase() + upperKey.substr(1);
+        newObject[lowerKey] = body[upperKey];
+      }
+    }
+    return newObject;
+  }
 }

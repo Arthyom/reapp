@@ -1,20 +1,30 @@
 <ion-header>
   <app-general-banner></app-general-banner>
-  <app-menubar (selectedTabEmitter)="moveTo($event)"></app-menubar>
+  <app-menubar [lens]="len" (selectedTabEmitter)="moveTo($event)">
+  </app-menubar>
 </ion-header>
 
-<ion-content>
-  <ion-slides mode="md" style="width: 100% !important">
-    <ion-slide *ngFor="let slide of slides" style="width: 100% !important">
-      <ion-list class="ion-no-margin" style="background-color: gray">
-        <app-general-item
-          (itemClicked)="detailsOf($event)"
-          *ngFor="let item of items"
-          class="ion-activatable ripple-parent"
-          [item]="item"
-        >
-        </app-general-item>
-      </ion-list>
+<ion-content forceOverscroll="true" fullscreen="true" color="primary">
+
+
+  <ion-slides >
+    <ion-slide>
+      <ion-list  class="ion-no-margin"  style="height: 100%; background-color: transparent;">
+
+        <ion-card  *ngFor="let item of items">
+
+          <app-general-item
+          [transType]='transType'
+
+            class="ion-activatable ripple-parent"
+            [item]="item"
+          >
+          </app-general-item>
+        </ion-card>
+
+    </ion-list>
+
+    <app-general-empty *ngIf="!items.length"></app-general-empty>
     </ion-slide>
   </ion-slides>
 </ion-content>

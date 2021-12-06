@@ -1,45 +1,72 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Header</ion-title>
-  </ion-toolbar>
+<ion-header class="ion-no-border">
+
+ <ion-slides >
+   <ion-slide class="img-panel">
+   </ion-slide>
+   <ion-slide>
+   </ion-slide>
+ </ion-slides>
 </ion-header>
 
-<ion-content>
+
+
+<ion-content >
   <ion-slides
     style="width: 100%; height: 100%"
-    mode="ios"
-    pager="ios"
-    scrollbar="ios"
   >
     <ion-slide style="width: 100%; height: 100%">
-      <app-general-auth
-        [showLoginForm]="true"
-        (okEmit)="login()"
-        (clEmit)="slides.slidePrev()"
-      >
-        <ion-row class="registrar">
-          <ion-label>¿Quieres usar la app de SICAP?</ion-label>
-          <ion-button fill="clear" (click)="slides.slideNext()">
-            registrate
-          </ion-button>
-        </ion-row>
-      </app-general-auth>
+      <ion-row class="ion-padding ion-margin">
+        <ion-col size="12">
+          <ion-text color="primary">
+            <h1>¡Bienvenido, inicia sesion!</h1>
+          </ion-text>
+        </ion-col>
+        <ion-col size="12" >
+          <app-general-auth
+            [showLoginForm]="true"
+            (okEmit)="login($event)"
+            (clEmit)="slides.slidePrev()"
+          >
+            <ion-row class="registrar">
+              <ion-col size="12" class="ion-no-padding">
+                <ion-label>¿Quieres usar la app de SICAP?</ion-label>
+              </ion-col>
+              <ion-col size="12" class="ion-no-padding">
+                <ion-button fill="clear" (click)="unlockAndNext()">
+                  registrate
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </app-general-auth>
+        </ion-col>
+      </ion-row>
     </ion-slide>
 
     <ion-slide style="width: 100%; height: 100%">
-      <app-general-auth
-        [cancel]="true"
-        [showRegisForm]="true"
-        (clEmit)="slides.slidePrev()"
-        (okEmit)="slides.slidePrev()"
-      >
-        <ion-item class="telefono">
-          <ion-label position="floating"
-            >Telefono <ion-text color="danger">*</ion-text></ion-label
-          >
-          <ion-input required type="text"></ion-input>
-        </ion-item>
-      </app-general-auth>
+      <ion-row class="ion-padding ion-margin">
+        <ion-col size="12">
+          <ion-text color="primary">
+            <h1>¡Bienvenido, Registrate!</h1>
+          </ion-text>
+        </ion-col>
+          <ion-col size="12">
+            <app-general-auth
+              [cancel]="true"
+              [showRegisForm]="true"
+              (clEmit)="cancel()"
+              (okEmit)="register($event)"
+            >
+            </app-general-auth>
+          </ion-col>
+      </ion-row>
     </ion-slide>
   </ion-slides>
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar >
+    <ion-button style="text-transform: none;" fill='clear' expand='block' routerLink="/token">
+      Generar Token
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

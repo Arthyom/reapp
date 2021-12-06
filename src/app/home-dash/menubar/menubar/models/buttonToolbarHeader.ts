@@ -5,7 +5,7 @@ export const buttonToolbarHeaders = [
     index: 0,
     to: '',
     icon: 'repeat',
-    target: GeneralPaths.saldos
+    target: GeneralPaths.transferir
   },
   {
     title: 'Abonar',
@@ -28,8 +28,8 @@ export const buttonToolbarHeaders = [
     title: 'SPEI',
     index: 3,
     to: '',
-    icon: 'briefcase',
-    target: GeneralPaths.spei
+    icon: 'layers',
+    target: GeneralPaths.traspasos
 
   }
 ];

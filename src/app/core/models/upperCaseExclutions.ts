@@ -1,3 +1,3 @@
-export const uppExclutions: string[] = ['token', 'pwd', 'imei'];
-export const lowExclutions: string[] = ['Usuarios'];
+export const uppCases: string[] = ['usuario'];
+export const lowExclutions: string[] = ['Usuario'];
 

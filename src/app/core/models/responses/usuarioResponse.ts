@@ -4,4 +4,5 @@ export interface UsuarioResponse {
   token: string;
   idUsuario: string;
   nombre: string;
+  idPersona: string;
 }

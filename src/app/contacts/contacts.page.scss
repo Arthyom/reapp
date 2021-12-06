@@ -1,0 +1,14 @@
+ion-button{
+  height: 100% !important;
+}
+
+ion-slides, ion-slide, ion-list {
+  height: 100%;
+  width: 100% ;
+}
+
+
+ion-list, ion-button{
+  background-color: transparent !important;
+  --background: transparent !important;
+}

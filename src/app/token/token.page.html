@@ -3,8 +3,19 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>token</ion-title>
+    <ion-title>Generar Token</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content> </ion-content>
+<ion-content>
+  <app-general-auth
+    *ngIf="!isLogged"
+    [showLoginForm]="true"
+    (okEmit)="login($event)"
+  ></app-general-auth>
+  <app-general-token
+    *ngIf="isLogged"
+    (tokenEmiter)="createToken()"
+    [response]="response"
+  ></app-general-token>
+</ion-content>

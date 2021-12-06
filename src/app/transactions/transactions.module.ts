@@ -7,9 +7,13 @@ import { IonicModule } from '@ionic/angular';
 import { TransactionsPageRoutingModule } from './transactions-routing.module';
 
 import { TransactionsPage } from './transactions.page';
+import { CoreModule } from '../core/core-module.module';
+import { NgTippyModule } from 'angular-tippy';
 
 @NgModule({
   imports: [
+    NgTippyModule,
+    CoreModule,
     CommonModule,
     FormsModule,
     IonicModule,
@@ -17,4 +21,4 @@ import { TransactionsPage } from './transactions.page';
   ],
   declarations: [TransactionsPage]
 })
-export class TransactionsPageModule {}
+export class TransactionsPageModule { }

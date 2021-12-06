@@ -3,28 +3,35 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>passchange</ion-title>
+    <ion-title>Cambiar Contraseña</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-slides mode="ios" pager="ios" scrollbar="ios">
-    <ion-slide *ngFor="let messege of slideMessages">
-      <ion-card color="message.color">
-        <ion-card-header>
-          <ion-card-title>{{messege.title}}</ion-card-title>
-          <ion-card-subtitle>{{messege.subtitle}}</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content> {{messege.message}} </ion-card-content>
-      </ion-card>
-    </ion-slide>
-  </ion-slides>
 
-  <ion-slides mode="ios" pager="ios" scrollbar="ios">
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size='12'>
+        <ion-slides #slideInstruc >
+          <ion-slide *ngFor="let messege of parseObject(slideMessages)">
+            <ion-card color="message.color">
+              <ion-card-header>
+                <ion-card-title>{{messege.title}}</ion-card-title>
+                <ion-card-subtitle>{{messege.subtitle}}</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content> {{messege.message}} </ion-card-content>
+            </ion-card>
+          </ion-slide>
+        </ion-slides>
+      </ion-col>
+
+      <ion-col size="12">
+
+  <ion-slides #slideForms>
     <ion-slide>
       <app-general-auth
         [showValidForm]="true"
-        (stEmit)="checkStatus($event)"
+        (okEmit)="checkLoged($event)"
         [cancel]="true"
       ></app-general-auth>
     </ion-slide>
@@ -32,9 +39,15 @@
     <ion-slide>
       <app-general-auth
         [showChangeForm]="true"
+        (okEmit)="changPwd($event)"
         (stEmit)="checkStatus($event)"
         [cancel]="true"
       ></app-general-auth>
     </ion-slide>
   </ion-slides>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
 </ion-content>

@@ -1,0 +1,54 @@
+
+<ion-card *ngIf="response">
+  <ion-card-header class="ion-text-center ion-no-padding-bottom" >
+    <ion-card-subtitle>Tu token es</ion-card-subtitle>
+    <ion-card-title>
+      <ion-text color="primary" >
+        <h1 class="ion-no-margin" style="user-select: text !important; font-size: 60px !important;" >
+          {{ response.mensaje }}
+        </h1>
+      </ion-text>
+      <ion-text style="user-select: text !important;">
+        <h6 class="ion-no-margin" style="user-select: text !important;">
+          tiempo restante
+        </h6>
+        <ion-text color="success">
+          <h6 style="font-size: 40px !important" class="ion-no-margin">
+            {{ wait / 1000 }}
+          </h6>
+        </ion-text>
+      </ion-text>
+    </ion-card-title>
+    <ion-row>
+      <ion-col size="6">
+        <ion-button
+      [disabled]='!active'
+      (click)="createNewToken()"
+      expand="block">
+      Nuevo Token
+    </ion-button>
+      </ion-col>
+
+      <ion-col size="6">
+        <ion-button
+      (click)="copiarToken()"
+      expand="block" color='warning' >
+      Cipiar Token
+    </ion-button>
+
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-button (click)='cerrar()' expand="block" color='danger'>
+          Cerrar
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-card-header>
+</ion-card>
+
+
+
+
+
