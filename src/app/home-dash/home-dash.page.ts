@@ -30,21 +30,19 @@ export class HomeDashPage implements OnInit, AfterViewInit {
   async ngOnInit() {
 
 
-   const s = await  this.homeService.guiService.showGenericPop({
+    const s = await this.homeService.guiService.showGenericPop({
       component: LoadingModalComponent,
-      backdropDismiss : false
+      backdropDismiss: false
     });
 
-    buttonToolbarHeaders.forEach(async (buttonInfo) => {
-      this.homeService.post<any[]>(this.homeService.decConfs, buttonInfo.target)
-        .pipe(map(data => data.length > 0 ? data : [data]))
-        .subscribe((data) => {
 
-          setTimeout(() => {
-            this.len.push(data.length);
-            s.dismiss();
-          }, 1000);
-        });
+    buttonToolbarHeaders.sort((a, b) => a.index - b.index).forEach(async (buttonInfo) => {
+      let r = await this.homeService.post<any[]>(this.homeService.decConfs, buttonInfo.target).toPromise();
+      r = r.length ? r : [r];
+      this.len[buttonInfo.index] = r.length;
+      if (this.len.length === buttonToolbarHeaders.length) {
+        s.dismiss();
+      }
     });
 
   }
@@ -66,7 +64,7 @@ export class HomeDashPage implements OnInit, AfterViewInit {
   }
 
   detailsOf(item: any) {
-    this.router.navigate(['transactions', this.transType],  { state: { info: item } });
+    this.router.navigate(['transactions', this.transType], { state: { info: item } });
   }
 
   showMovements(item: any) {

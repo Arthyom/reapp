@@ -1,0 +1,15 @@
+{
+  "datoscaja": [
+    {
+      "Clasificacion": "Prestamos",
+      "IdPersona": "1927",
+      "NumeroMigrado": "0000000919",
+      "Nombre": "MARTINEZ GARCIA GLORIA",
+      "Servicio": "PRESTAMO MEJORA MANTENI REMODELA HABITA",
+      "IdPrestamo": "65841",
+      "Saldo": "10863.55",
+      "Intereses": "57.94",
+      "Iva": "9.27040000"
+    }
+  ]
+}

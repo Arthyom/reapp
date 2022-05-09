@@ -7,7 +7,7 @@ describe('GUIService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(GUIService);
+    //  service = TestBed.inject(guiService, nativeHttp);
   });
 
   it('should be created', () => {

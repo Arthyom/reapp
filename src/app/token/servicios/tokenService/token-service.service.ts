@@ -5,13 +5,16 @@ import { ConfigsService } from 'src/app/core/services/common/configs/configs.ser
 import { GUIService } from 'src/app/core/services/common/GUI/gui.service';
 import { BaseService } from '../../../core/services/common/base/base.service';
 
+import { HTTP } from '@awesome-cordova-plugins/http/ngx';
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class TokenServiceService extends BaseService {
 
   constructor(protected http: HttpClient, protected configs: ConfigsService,
-    public guiService: GUIService) {
-    super(http, configs, GeneralPaths.generaToken, guiService);
+    public guiService: GUIService, public nativeHttp: HTTP) {
+    super(http, configs, GeneralPaths.generaToken, guiService, nativeHttp);
   }
 }

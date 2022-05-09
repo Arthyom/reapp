@@ -12,6 +12,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IonicGestureConfig } from './utils/IonicGestureConfig';
 
 import { Device } from '@ionic-native/device/ngx';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
+
+import { HTTP } from '@awesome-cordova-plugins/http/ngx';
 
 
 @NgModule({
@@ -20,12 +24,18 @@ import { Device } from '@ionic-native/device/ngx';
   imports: [
     ReactiveFormsModule,
     BrowserModule, IonicModule.forRoot(),
-    AppRoutingModule, HttpClientModule, CoreModule],
+    AppRoutingModule, HttpClientModule, CoreModule, ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })],
   providers:
-  [
-    { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
-  ],
+    [
+      HTTP,
+      { provide: HAMMER_GESTURE_CONFIG, useClass: IonicGestureConfig },
+      { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

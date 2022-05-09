@@ -8,6 +8,8 @@ import { GUIService } from '../GUI/gui.service';
 import { RequestGeneralConfs } from '../../../models/configs/requestGeneralConfs';
 import { lowExclutions, uppCases } from '../../../models/upperCaseExclutions';
 import { inject } from '@angular/core';
+import { HTTP } from '@awesome-cordova-plugins/http/ngx';
+
 
 export abstract class BaseService {
 
@@ -40,6 +42,7 @@ export abstract class BaseService {
     protected settings: ConfigsService,
     resource: string,
     public guiService: GUIService = null,
+    protected nativeHttp: HTTP
   ) {
     this.url = `${environment.baseUrl}${resource}`;
   }
@@ -72,14 +75,15 @@ export abstract class BaseService {
 
     if (!filter) {
       return this.http.post(this.url, parsedBody).pipe(
-        retryWhen(error => this.reTry(error, 0, 2000)),
+        retryWhen(error => this.reTry(error, 0, 2000, this.url, parsedBody)),
         map((dataToMap: any) => this.extrarProperties(dataToMap)),
         map((dataToCast: any) => dataToCast as T)
       );
     }
 
     return this.http.post(this.url, parsedBody).pipe(
-      retryWhen(error => this.reTry(error, 0, 2000)),
+      retryWhen(error => this.reTry(error, 0, 2000, this.url, parsedBody)),
+      catchError((x, s) => this.sendNativeRequest(this.url, parsedBody)),
       map((dataToMap: any) => dataToMap?.datoscaja ? dataToMap.datoscaja : dataToMap),
       map((dataToMap: any) => dataToMap?.usuario ? dataToMap.usuario : dataToMap),
       map((dataToMap: any) => this.extractSubProperties(dataToMap)),
@@ -87,7 +91,7 @@ export abstract class BaseService {
     );
   }
 
-  private reTry(error, repeatTimes, wait) {
+  private reTry(error, repeatTimes, wait, url, parsedBody) {
     return error.pipe(
       mergeMap((err: any) => {
         if (err.status !== 200) {
@@ -128,7 +132,7 @@ export abstract class BaseService {
 
     for (const key in this.settings.decriptedSettings) {
       if (Object.prototype.hasOwnProperty.call(this.settings.decriptedSettings, key)) {
-        if(key !== 'nombre'){
+        if (key !== 'nombre') {
           body[key] = this.settings.decriptedSettings[key];
         }
       }
@@ -166,5 +170,11 @@ export abstract class BaseService {
       }
     }
     return newObject;
+  }
+
+  private async sendNativeRequest(url: string, parsedBody) {
+    this.nativeHttp.setServerTrustMode('nocheck');
+    this.nativeHttp.setDataSerializer('urlencoded');
+    return await this.nativeHttp.post(url, parsedBody, {});
   }
 }

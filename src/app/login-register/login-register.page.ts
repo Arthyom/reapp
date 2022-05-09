@@ -7,6 +7,7 @@ import { UsuarioRequest } from '../core/models/requests/usuarioRequest';
 import { RegistrosRequest } from '../core/models/requests/registerRequest';
 import { GeneralResponse } from '../core/models/responses/generalResponse';
 import { GeneralAuthComponent } from '../core/general-auth/general-auth/general-auth.component';
+import { loginErrorOption } from '../core/data/toastOptions';
 
 
 @Component({
@@ -39,20 +40,20 @@ export class LoginRegisterPage implements AfterViewInit {
         return this.loginService.guiService.navigateTo('/home');
       }
     } catch (error) {
-      this.loginService.guiService.showToast({ duration: 3000, color: 'danger', message: 'error' });
+      this.loginService.guiService.showToast(loginErrorOption);
     }
   }
 
   async register(event) {
     try {
       const response = await this.registerService.
-      post<GeneralResponse>(event).toPromise();
+        post<GeneralResponse>(event).toPromise();
       this.cancel();
     } catch (error) { }
   }
 
-  cancel(){
-    this.foms.forEach( (form)=> form.authForm.reset());
+  cancel() {
+    this.foms.forEach((form) => form.authForm.reset());
     this.unlockAndPrev();
   }
 
@@ -62,7 +63,7 @@ export class LoginRegisterPage implements AfterViewInit {
     this.slides.lockSwipes(true);
   }
 
-   unlockAndNext() {
+  unlockAndNext() {
     this.slides.lockSwipes(false);
     this.slides.slideNext();
     this.slides.lockSwipes(true);

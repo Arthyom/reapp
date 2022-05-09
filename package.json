@@ -19,6 +19,8 @@
     "@angular/platform-browser": "~12.1.1",
     "@angular/platform-browser-dynamic": "~12.1.1",
     "@angular/router": "~12.1.1",
+    "@angular/service-worker": "~12.1.1",
+    "@awesome-cordova-plugins/http": "^5.41.0",
     "@capacitor/app": "1.0.3",
     "@capacitor/core": "3.2.3",
     "@capacitor/haptics": "1.0.3",
@@ -30,7 +32,6 @@
     "@ionic/angular": "^5.5.2",
     "@types/hammerjs": "^2.0.40",
     "angular-tippy": "0.0.3",
-    "cordova-android": "9.1.0",
     "hammerjs": "^2.0.8",
     "ionic-long-press": "^2.0.3",
     "rxjs": "~6.6.0",
@@ -55,8 +56,13 @@
     "@types/node": "^12.11.1",
     "@typescript-eslint/eslint-plugin": "4.16.1",
     "@typescript-eslint/parser": "4.16.1",
+    "cordova-android": "^9.1.0",
+    "cordova-android-support-gradle-release": "^3.0.1",
     "cordova-clipboard": "^1.3.0",
+    "cordova-plugin-advanced-http": "^3.3.1",
     "cordova-plugin-device": "^2.0.2",
+    "cordova-plugin-file": "^7.0.0",
+    "cordova-plugin-file-opener2": "^3.0.5",
     "cordova-plugin-ionic-keyboard": "^2.2.0",
     "cordova-plugin-ionic-webview": "^4.2.1",
     "cordova-plugin-splashscreen": "^5.0.2",
@@ -89,7 +95,10 @@
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-clipboard": {}
+      "cordova-clipboard": {},
+      "cordova-plugin-advanced-http": {},
+      "cordova-plugin-file-opener2": {},
+      "cordova-android-support-gradle-release": {}
     },
     "platforms": [
       "android"

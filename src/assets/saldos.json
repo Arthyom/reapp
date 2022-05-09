@@ -1,0 +1,54 @@
+{
+  "datoscaja": [
+    {
+      "Clasificacion": "Ahorros",
+      "IdPersona": "1927",
+      "NumeroMigrado": "1927",
+      "Nombre": "MARTINEZ GARCIA GLORIA",
+      "Servicio": "DEPOSITOS A LA VISTA",
+      "Cuenta": "749605",
+      "Saldo": "212.66",
+      "Intereses": "0.00"
+    },
+    {
+      "Clasificacion": "Ahorros",
+      "IdPersona": "1927",
+      "NumeroMigrado": "1927",
+      "Nombre": "MARTINEZ GARCIA GLORIA",
+      "Servicio": "AHORROS ORDINARIOS",
+      "Cuenta": "749604",
+      "Saldo": "43058.71",
+      "Intereses": "0.00"
+    },
+    {
+      "Clasificacion": "Ahorros",
+      "IdPersona": "1927",
+      "NumeroMigrado": "1927",
+      "Nombre": "MARTINEZ GARCIA GLORIA",
+      "Servicio": "AHORRO PARA PRESTAMO",
+      "Cuenta": "749606",
+      "Saldo": "2200.00",
+      "Intereses": "0.00"
+    },
+    {
+      "Clasificacion": "Ahorros",
+      "IdPersona": "1927",
+      "NumeroMigrado": "1927",
+      "Nombre": "MARTINEZ GARCIA GLORIA",
+      "Servicio": "AHORRO PROGRAMADO",
+      "Cuenta": "749607",
+      "Saldo": "0.00",
+      "Intereses": "0.00"
+    },
+    {
+      "Clasificacion": "Prestamos",
+      "IdPersona": "1927",
+      "NumeroMigrado": "0000000919",
+      "Nombre": "MARTINEZ GARCIA GLORIA",
+      "Servicio": "PRESTAMO MEJORA MANTENI REMODELA HABITA",
+      "Cuenta": "65841",
+      "Saldo": "10863.55",
+      "Intereses": "57.94"
+    }
+  ]
+}

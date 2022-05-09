@@ -4,6 +4,7 @@ import { GeneralTransTypes } from '../core/enums/general-trans-types';
 import { TransactionsService } from './services/transactions.service';
 import { GeneralResponse } from '../core/models/responses/generalResponse';
 import { GeneralPaths } from '../core/enums/general-paths';
+import { transactionErrorOption, transactionOkOption } from '../core/data/toastOptions';
 
 @Component({
   selector: 'app-transactions',
@@ -25,12 +26,12 @@ export class TransactionsPage implements OnInit {
   async ngOnInit() {
     this.item = this.router.getCurrentNavigation().extras.state.info;
     this.transType = this.activatedRouter.snapshot.paramMap.get('type');
-    this.transService.guiService.genericSource$.subscribe( async (data)=>{
+    this.transService.guiService.genericSource$.subscribe(async (data) => {
       this.currentIndex = await data;
     });
   }
 
-  goTo( to: string ){
+  goTo(to: string) {
     this.transService.guiService.navigateTo(to);
   }
 
@@ -46,22 +47,12 @@ export class TransactionsPage implements OnInit {
     }
 
     const resp = await this.transService.post<GeneralResponse>(event, serviceTarget).toPromise();
-    console.log('respues', resp);
     this.transService.guiService.navigateTo('/home');
-    if(resp.respuesta.toLowerCase() === 'ok'){
-      this.transService.guiService.showToast({
-        message: `Correcto tu folio es ${resp.registro}`,
-        color: 'success',
-        duration: 9000
-      });
-
+    if (resp.respuesta.toLowerCase() === 'ok') {
+      this.transService.guiService.showToast(transactionOkOption(resp.registro));
     }
-    else{
-      this.transService.guiService.showToast({
-        message: 'correcto',
-        color: 'danger',
-        duration: 5000
-      });
+    else {
+      this.transService.guiService.showToast(transactionErrorOption);
     }
   }
 

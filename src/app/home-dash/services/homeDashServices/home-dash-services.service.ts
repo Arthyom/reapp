@@ -5,14 +5,18 @@ import { ConfigsService } from '../../../core/services/common/configs/configs.se
 import { GeneralPaths } from '../../../core/enums/general-paths';
 import { GUIService } from '../../../core/services/common/GUI/gui.service';
 
+
+import { HTTP } from '@awesome-cordova-plugins/http/ngx';
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class HomeDashServicesService extends BaseService {
 
   constructor(protected http: HttpClient, protected configs: ConfigsService,
-    public guiService: GUIService) {
-    super(http, configs, GeneralPaths.generaToken, guiService);
+    public guiService: GUIService, public nativeHttp: HTTP) {
+    super(http, configs, GeneralPaths.generaToken, guiService, nativeHttp);
   }
 
 

@@ -1,219 +1,236 @@
-
-
-
-  <ion-row class="ion-no-padding" *ngIf="transForm" style="width: 100%; height: 100%;">
-    <ion-col  >
-      <ion-button expand="block"  class="ion-no-padding ion-no-margin" fill='none' (click)='slidePrev()' >
-        <ion-icon  size="small" slot="icon-only" name="arrow-back"></ion-icon>
-      </ion-button>
-    </ion-col>
-    <ion-col  size="10" class="ion-no-margin ion-no-padding" >
-      <form [formGroup]="transForm" class="ion-no-margin ion-no-padding">
-        <ion-slides  class="ion-no-margin ion-no-padding" [options]="opt">
-          <ion-slide  class="ion-no-margin ion-no-padding" *ngIf="transTypes.traspasos === transType">
-
-
-            <ion-list style="background-color: transparent !important;" >
-
-              <ion-card *ngFor="let item of items">
-
-                <app-general-item
-                style="width: 100% !important;"
-                  (itemPressed)="setFromAccount($event)"
-
-                  [item]="item"
-                  [selectable]="true"
-                ></app-general-item>
-              </ion-card>
-            </ion-list>
-
-            <app-general-empty *ngIf="!items.length"></app-general-empty>
-
-          </ion-slide>
-
-          <ion-slide *ngIf="transTypes.traspasos !== transType" >
-
-            <ion-list style="background-color: transparent !important;">
-
-              <ion-card class="full-width-select " *ngFor="let item of items">
-
+<ion-row
+  class="ion-no-padding"
+  *ngIf="transForm"
+  style="width: 100%; height: 100%"
+>
+  <ion-col>
+    <ion-button
+      expand="block"
+      class="ion-no-padding ion-no-margin"
+      fill="none"
+      (click)="slidePrev()"
+    >
+      <ion-icon size="small" slot="icon-only" name="arrow-back"></ion-icon>
+    </ion-button>
+  </ion-col>
+  <ion-col size="10" class="ion-no-margin ion-no-padding">
+    <form [formGroup]="transForm" class="ion-no-margin ion-no-padding">
+      <ion-slides class="ion-no-margin ion-no-padding" [options]="opt">
+        <ion-slide
+          class="ion-no-margin ion-no-padding"
+          *ngIf="transTypes.traspasos === transType"
+        >
+          <ion-list style="background-color: transparent !important">
+            <ion-card *ngFor="let item of items">
               <app-general-item
-
+                style="width: 100% !important"
                 (itemPressed)="setFromAccount($event)"
-
                 [item]="item"
                 [selectable]="true"
               ></app-general-item>
-              </ion-card>
-
-              <app-general-empty *ngIf="!items.length"></app-general-empty>
-            </ion-list>
-          </ion-slide>
-
-          <ion-slide>
-            <ion-card>
-              <ion-card-header class="ion-no-padding">
-                <ion-card-title>
-                  <h1>Monto</h1>
-                </ion-card-title>
-              </ion-card-header>
-              <ion-card-content class="ion-no-padding">
-
-                    <ion-text color="primary">
-
-                      <h1>
-                        Disponible: {{selected?.disponible || selected?.saldo | currency }}
-                      </h1>
-
-                    </ion-text>
-
-                  <ion-grid class="ion-margin">
-                    <ion-row>
-                      <ion-col size="12">
-
-                        <ion-item lines="full" class="ion-text-center">
-                          <ion-label position="floating">¿Cuanto vas a enviar?<ion-text color="danger">*</ion-text></ion-label>
-                          <ion-input formControlName='montotranspaso' class="ion-no-padding"  type="number"></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size="12">
-                        <ion-button
-                        (click)='slideNext()'
-                        [disabled]="!transForm.controls.montotranspaso.valid"
-                        size="large"
-                        expand="block"
-                        fill="clear"
-                      >
-                        Siguiente
-                      </ion-button>
-                      </ion-col>
-                    </ion-row>
-                  </ion-grid>
-
-
-              </ion-card-content>
-
             </ion-card>
-          </ion-slide>
+          </ion-list>
 
-          <ion-slide  *ngIf="transTypes.traspasos === transType">
-            <ion-card>
-              <ion-card-header class="ion-no-padding">
-                <ion-card-title>
-                  <h1>Concepto</h1>
-                </ion-card-title>
-              </ion-card-header>
-              <ion-card-content class="ion-no-padding">
+          <app-general-empty *ngIf="!items.length"></app-general-empty>
+        </ion-slide>
 
-                    <ion-text color="primary">
-
-                      <h1>
-                        Conceto de tu operacion
-                      </h1>
-
-                    </ion-text>
-
-                  <ion-grid class="ion-margin">
-                    <ion-row>
-                      <ion-col size="12">
-
-                        <ion-item lines="full" class="ion-text-center">
-                          <ion-label position="floating">Describe brevemente<ion-text color="danger">*</ion-text></ion-label>
-                          <ion-input formControlName='concepto' class="ion-no-padding"  ></ion-input>
-                        </ion-item>
-                      </ion-col>
-                      <ion-col size="12">
-                        <ion-button
-                        [disabled]="!transForm.controls.concepto.valid"
-                        size="large"
-                        expand="block"
-                        fill="clear"
-                        (click)='slideNext()'
-                      >
-                        Siguiente
-                      </ion-button>
-                      </ion-col>
-                    </ion-row>
-                  </ion-grid>
-
-
-              </ion-card-content>
-
+        <ion-slide *ngIf="transTypes.traspasos !== transType">
+          <ion-list style="background-color: transparent !important">
+            <ion-card class="full-width-select" *ngFor="let item of items">
+              <app-general-item
+                (itemPressed)="setFromAccount($event)"
+                [item]="item"
+                [selectable]="true"
+              ></app-general-item>
             </ion-card>
-          </ion-slide>
 
-          <ion-slide >
-            <ion-card>
-              <ion-card-header class="ion-no-padding">
-                <ion-card-title class="ion-padding-start ion-padding-end ion-padding-top">Resumen de la operacion</ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                <ion-list>
-                  <ion-item lines="full">
-                    <ion-badge slot="start"  >CO</ion-badge>
-                    <ion-label>
-                      Cuenta origen
-                      <ion-text color="primary">
-                        <h1>{{selected?.cuenta || selected?.idSocio}}</h1>
-                      </ion-text>
-                    </ion-label>
-                  </ion-item>
-                  <ion-item lines="full" *ngIf="transTypes.traspasos === transType">
-                    <ion-badge slot="start">SO</ion-badge>
-                    <ion-label>
-                      Socio Destino
-                      <ion-text color="primary">
-                        <h1>{{transForm.value.sociodestino}}</h1>
-                      </ion-text>
-                    </ion-label>
-                  </ion-item>
-                  <ion-item lines="full">
-                    <ion-badge slot="start">CD</ion-badge>
-                    <ion-label>
-                      Cuenta destino
-                      <ion-text color="primary">
-                        <h1>{{transForm.value.cuentadestino}}</h1>
-                      </ion-text>
-                    </ion-label>
-                  </ion-item>
-                  <ion-item lines="full">
-                    <ion-badge slot="start">MO</ion-badge>
-                    <ion-label>
-                      Monto
-                      <ion-text color="primary">
-                        <h1>{{transForm.value.montotranspaso}}</h1>
-                      </ion-text>
-                    </ion-label>
-                  </ion-item>
-                  <ion-item lines="full" *ngIf="transTypes.traspasos === transType">
-                    <ion-badge slot="start">CT</ion-badge>
-                    <ion-label>
-                      Concepto
-                      <ion-text color="primary">
-                        <h1>{{transForm.value.concepto}}</h1>
-                      </ion-text>
-                    </ion-label>
-                  </ion-item>
-                </ion-list>
-                <ion-button
-                  [disabled]="transForm.invalid"
-                  (click)="execute()"
-                  size="large"
-                  expand="block"
-                  fill="clear"
+            <app-general-empty *ngIf="!items.length"></app-general-empty>
+          </ion-list>
+        </ion-slide>
+
+        <ion-slide>
+          <ion-card>
+            <ion-card-header class="ion-no-padding">
+              <ion-card-title>
+                <h1>Monto</h1>
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="ion-no-padding">
+              <ion-text color="primary">
+                <h1>
+                  Disponible:
+                  {{ selected?.disponible || selected?.saldo | currency }}
+                </h1>
+              </ion-text>
+
+              <ion-grid class="ion-margin">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-item lines="full" class="ion-text-center">
+                      <ion-label position="floating"
+                        >¿Cuanto vas a enviar?<ion-text color="danger"
+                          >*</ion-text
+                        ></ion-label
+                      >
+                      <ion-input
+                        formControlName="montotraspaso"
+                        class="ion-no-padding"
+                        type="number"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-button
+                      (click)="slideNext()"
+                      [disabled]="!transForm.controls.montotraspaso.valid"
+                      size="large"
+                      expand="block"
+                      fill="clear"
+                    >
+                      Siguiente
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
+        </ion-slide>
+
+        <ion-slide *ngIf="transTypes.traspasos === transType">
+          <ion-card>
+            <ion-card-header class="ion-no-padding">
+              <ion-card-title>
+                <h1>Concepto</h1>
+              </ion-card-title>
+            </ion-card-header>
+            <ion-card-content class="ion-no-padding">
+              <ion-text color="primary">
+                <h1>Conceto de tu operacion</h1>
+              </ion-text>
+
+              <ion-grid class="ion-margin">
+                <ion-row>
+                  <ion-col size="12">
+                    <ion-item lines="full" class="ion-text-center">
+                      <ion-label position="floating"
+                        >Describe brevemente<ion-text color="danger"
+                          >*</ion-text
+                        ></ion-label
+                      >
+                      <ion-input
+                        formControlName="concepto"
+                        class="ion-no-padding"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col size="12">
+                    <ion-button
+                      [disabled]="!transForm.controls.concepto.valid"
+                      size="large"
+                      expand="block"
+                      fill="clear"
+                      (click)="slideNext()"
+                    >
+                      Siguiente
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
+        </ion-slide>
+
+        <ion-slide>
+          <ion-card>
+            <ion-card-header class="ion-no-padding">
+              <ion-card-title
+                class="ion-padding-start ion-padding-end ion-padding-top"
+                >Resumen de la operacion</ion-card-title
+              >
+            </ion-card-header>
+            <ion-card-content>
+              <ion-list>
+                <ion-item lines="full">
+                  <ion-badge slot="start">CO</ion-badge>
+                  <ion-label>
+                    Cuenta origen
+                    <ion-text color="primary">
+                      <h1>
+                        {{
+                          selected?.cuenta ||
+                            selected?.idSocio ||
+                            selected.numeroMigrado
+                        }}
+                      </h1>
+                    </ion-text>
+                  </ion-label>
+                </ion-item>
+                <ion-item
+                  lines="full"
+                  *ngIf="transTypes.traspasos === transType"
                 >
-                  Confirmar
-                </ion-button>
-              </ion-card-content>
-            </ion-card>
-          </ion-slide>
-        </ion-slides>
-      </form>
-    </ion-col>
-    <ion-col >
-      <ion-button expand="block" class="ion-no-padding ion-no-margin"  fill='none' (click)='slideNext()'>
-        <ion-icon size="small" slot="icon-only" name="arrow-forward"></ion-icon>
-      </ion-button>
-    </ion-col>
-  </ion-row>
-
+                  <ion-badge slot="start">SO</ion-badge>
+                  <ion-label>
+                    Socio Destino
+                    <ion-text color="primary">
+                      <h1>{{ transForm.value.sociodestino }}</h1>
+                    </ion-text>
+                  </ion-label>
+                </ion-item>
+                <ion-item lines="full">
+                  <ion-badge slot="start">CD</ion-badge>
+                  <ion-label>
+                    Cuenta destino
+                    <ion-text color="primary">
+                      <h1>{{ transForm.value.cuentadestino }}</h1>
+                    </ion-text>
+                  </ion-label>
+                </ion-item>
+                <ion-item lines="full">
+                  <ion-badge slot="start">MO</ion-badge>
+                  <ion-label>
+                    Monto
+                    <ion-text color="primary">
+                      <h1>{{ transForm.value.montotraspaso }}</h1>
+                    </ion-text>
+                  </ion-label>
+                </ion-item>
+                <ion-item
+                  lines="full"
+                  *ngIf="transTypes.traspasos === transType"
+                >
+                  <ion-badge slot="start">CT</ion-badge>
+                  <ion-label>
+                    Concepto
+                    <ion-text color="primary">
+                      <h1>{{ transForm.value.concepto }}</h1>
+                    </ion-text>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+              <ion-button
+                [disabled]="transForm.invalid"
+                (click)="execute()"
+                size="large"
+                expand="block"
+                fill="clear"
+              >
+                Confirmar
+              </ion-button>
+            </ion-card-content>
+          </ion-card>
+        </ion-slide>
+      </ion-slides>
+    </form>
+  </ion-col>
+  <ion-col>
+    <ion-button
+      expand="block"
+      class="ion-no-padding ion-no-margin"
+      fill="none"
+      (click)="slideNext()"
+    >
+      <ion-icon size="small" slot="icon-only" name="arrow-forward"></ion-icon>
+    </ion-button>
+  </ion-col>
+</ion-row>

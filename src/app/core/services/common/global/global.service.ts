@@ -5,14 +5,17 @@ import { BaseService } from '../base/base.service';
 import { ConfigsService } from '../configs/configs.service';
 import { GUIService } from '../GUI/gui.service';
 
+import { HTTP } from '@awesome-cordova-plugins/http/ngx';
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class GlobalService extends BaseService {
 
   constructor(protected http: HttpClient, protected configs: ConfigsService,
-    public guiService: GUIService) {
-    super(http, configs, GeneralPaths.generaToken, guiService);
+    public guiService: GUIService, public nativeHttp: HTTP) {
+    super(http, configs, GeneralPaths.generaToken, guiService, nativeHttp);
   }
 
 

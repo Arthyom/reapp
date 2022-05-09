@@ -8,16 +8,14 @@ export const buttonToolbarHeaders = [
     target: GeneralPaths.transferir
   },
   {
-    title: 'Abonar',
+    title: 'Traspasos',
     index: 1,
     to: '',
     icon: 'card',
     target: GeneralPaths.abonar
-
-
   },
   {
-    title: 'Traspasos',
+    title: 'Abonar',
     index: 2,
     to: '',
     icon: 'people',

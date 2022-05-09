@@ -6,8 +6,10 @@ export const environment = {
   production: false,
   //baseUrl: 'http://localhost/test/',
   //baseUrl: 'https://vip.sicap.mx/webservices/webservicesappyuriria.php?url=',
-  baseUrl: 'https://vip.sicap.mx/webservices/webservicesappsocioyuriria.php?url=',
-  token: 'YuririaApt*?2018Tk?',
+  //baseUrl: 'https://vip.sicap.mx/webservices/webservicesappsocioyuriria.php?url=',
+  baseUrl: 'https://vip.sicap.mx/webservices/webservicesappsocio.php?url=',
+  //token: 'YuririaApt*?2018Tk?',
+  token: 'TanHutApt*?2020Tk?',
   imei: '869957047546065'
 };
 

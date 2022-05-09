@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { GeneralPaths } from '../../enums/general-paths';
 import { GeneralTransTypes } from '../../enums/general-trans-types';
 import { IonSlide, IonSlides, ToastOptions } from '@ionic/angular';
+import { steperSelectCustomerToTransfer, steperSelectCustomerToTransferCustomer } from '../../data/toastOptions';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class GeneralTransStepsComponent implements OnInit, AfterViewInit {
   transTypes = GeneralTransTypes;
   selectedTarget: any;
 
-  opt = {slidesPerView: 1};
+  opt = { slidesPerView: 1 };
 
   valsForTrans: any;
 
@@ -33,52 +34,57 @@ export class GeneralTransStepsComponent implements OnInit, AfterViewInit {
 
   constructor(private global: GlobalService) {
 
+
+
   }
 
   async ngOnInit() {
 
-
     this.valsForTrans = {
       cuentadestino: new FormControl(null, [Validators.required]),
-
-      montotranspaso: new FormControl(null, [Validators.required,
-        Validators.min(0.1),
-
-        Validators.max(this.selected?.disponible || this.selected?.disponible)]),
+      montotraspaso: new FormControl(null, [Validators.required,
+      Validators.min(0.1),
+      Validators.max(this.selected?.disponible
+      )]),
     };
 
     this.valsForTransSocio = {
-      sociodestino:new FormControl(null, [Validators.required]),
+      sociodestino: new FormControl(null, [Validators.required]),
       cuentadestino: new FormControl(null, [Validators.required]),
-      montotranspaso: new FormControl(null, [Validators.required,
-        Validators.min(0.1),
-         Validators.max(this.selected?.disponible || this.selected?.disponible)]),
-      concepto: new FormControl( null,[Validators.required])
+      montotraspaso: new FormControl(null, [Validators.required,
+      Validators.min(0.1),
+      Validators.max(this.selected?.disponible)]),
+      concepto: new FormControl(null, [Validators.required])
     };
 
-
-    if(this.transType === 'traspasos'){
+    if (this.transType === this.transTypes.traspasos) {
       this.transForm = new FormGroup(this.valsForTransSocio);
-      this.items = await this.global.post<any[]>( this.global.configsBase, GeneralPaths.saldosDisponibles).toPromise();
-
-      this.getTransTo();
     }
-    else{
+    else {
       this.transForm = new FormGroup(this.valsForTrans);
     }
-    this.global.guiService.genericSource$.subscribe( ()=>{
-      this.getTransTo();
-    });
+
+    this.getTransTo();
+
+    //this.global.guiService.genericSource$.subscribe(() => {
+    //this.getTransTo();
+    //});
 
 
   }
 
-  async getTransTo(){
-    if( this.transType === this.transTypes.traspasos ){
-      const t = await this.global.post<any[]> ( this.global.configsBase, GeneralPaths.cuentasRegistradas )
-      .toPromise();
-      this.items = t.reverse();
+  async getTransTo() {
+    let t: any = {};
+    if (this.transType === this.transTypes.traspasos) {
+      t = await this.global.post<any[]>(this.global.configsBase, GeneralPaths.cuentasRegistradas)
+        .toPromise();
+      this.transForm = new FormGroup(this.valsForTransSocio);
     }
+    else {
+      t = await this.global.post<any[]>(this.global.configsBase, GeneralPaths.saldosDisponibles).toPromise();
+      this.transForm = new FormGroup(this.valsForTrans);
+    }
+    this.items = t.reverse();
   }
 
   ngAfterViewInit(): void {
@@ -86,33 +92,28 @@ export class GeneralTransStepsComponent implements OnInit, AfterViewInit {
     this.slideShowIns();
   }
 
-  slideNext(){
+  slideNext() {
     this.global.guiService.slidesUnlockMoveNext();
     this.slideShowIns();
 
   }
 
-  slidePrev(){
+  slidePrev() {
     this.global.guiService.slidesUnlockMovePrev();
     this.slideShowIns();
   }
 
-  async slideShowIns(){
+  async slideShowIns() {
     const index = await this.global.guiService.slidesGetIndex();
-    let options: ToastOptions = {duration: 2000, color: 'warning', animated: true,
-    message: 'Selecciona cuenta de destino', buttons: ['Ok'] };
+    let options = steperSelectCustomerToTransfer;
 
-    if( (this.transType === this.transTypes.traspasos) && (index === 0)  ){
+    if ((this.transType === this.transTypes.traspasos) && (index === 0)) {
       switch (index) {
-        case 0:
-          options = {duration: 2000, color: 'warning', animated: true,
-          message: 'Selecciona un socio o crea uno nuevo', buttons: ['Ok'] };
-        break;
-
+        case 0: options = steperSelectCustomerToTransferCustomer; break;
       }
     }
-    if( index === 0 ){
-      this.global.guiService.showToast( options );
+    if (index === 0) {
+      this.global.guiService.showToast(options);
     }
 
   }
@@ -128,9 +129,8 @@ export class GeneralTransStepsComponent implements OnInit, AfterViewInit {
     this.transForm.value.folio = '';
     this.transForm.value.coordenadas = '';
 
-    if(this.transType === this.transTypes.traspasos){
-      this.transForm.value.sociodestino =  this.transForm.value.idPersona;
-      this.transForm.value.cuentafuente = this.selected.cuenta;
+    if (this.transType === this.transTypes.traspasos) {
+      this.transForm.value.sociodestino = this.transForm.value.idPersona;
     }
 
 
@@ -138,10 +138,13 @@ export class GeneralTransStepsComponent implements OnInit, AfterViewInit {
   }
 
   setFromAccount(event) {
-    console.log('event',     this.global.configsBase   );
+    console.log('event', event);
     this.slideNext();
-    this.transForm.setControl('cuentafuente', new FormControl( this.selected.cuenta, [Validators.required]));
-    this.transForm.setControl('sociodestino', new FormControl( event.socio, [Validators.required]));
+    this.transForm.setControl('cuentafuente', new FormControl(this.selected.cuenta, [Validators.required]));
+
+    if (this.transType === this.transTypes.traspasos) {
+      this.transForm.setControl('sociodestino', new FormControl(event.socio, [Validators.required]));
+    }
 
     this.transForm.setControl('cuentadestino', new FormControl(event.cuenta, [Validators.required]));
   }

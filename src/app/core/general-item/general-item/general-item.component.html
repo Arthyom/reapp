@@ -1,118 +1,142 @@
-
-
-  <ion-item-sliding  class="ion-activatable ripple-parent"
-
+<ion-item-sliding
+  class="ion-activatable ripple-parent"
   (click)="onItemClick(el)"
   ion-long-press
-  (pressed)="press($event, el)">
-    <ion-item class="ion-no-padding ion-no-margin" style="--inner-padding-end: 0 !important;">
-      <ion-label style="background-color: transparent !important;">
-          <ion-item  #el lines="full"  >
-            {{(item.servicio|| item.destinatario) | titlecase }}
-            <ion-badge *ngIf="item.clasificacion" [color]="getBadgeColor()" slot="end" mode="ios">
-              {{item.clasificacion }}
+  (pressed)="press($event, el)"
+>
+  <ion-item
+    class="ion-no-padding ion-no-margin"
+    style="--inner-padding-end: 0 !important"
+  >
+    <ion-label style="background-color: transparent !important">
+      <ion-item #el lines="full">
+        {{ item.servicio || item.destinatario | titlecase }}
+        <ion-badge
+          *ngIf="item.clasificacion"
+          [color]="getBadgeColor()"
+          slot="end"
+          mode="ios"
+        >
+          {{ item.clasificacion }}
+        </ion-badge>
+        <ion-badge
+          *ngIf="item.fecha"
+          [color]="getBadgeColor()"
+          slot="end"
+          mode="ios"
+        >
+          {{ item.fecha }}
+        </ion-badge>
+        <ion-icon
+          *ngIf="item.destinatario"
+          slot="end"
+          name="person"
+          color="primary"
+        ></ion-icon>
+      </ion-item>
+      <ion-card-content class="ion-no-padding-bottom ion-text-left">
+        <ion-grid class="ion-no-padding">
+          <ion-row *ngIf="!(item.abono || item.cargo)">
+            <ion-col>
+              <ion-label class="ion-no-margin ion-padding-end ion-text-end">
+                <p>
+                  <ng-container *ngIf="item.cuenta; else idSocio">
+                    <span *ngIf="item.cuenta"> Cuenta </span>
+                  </ng-container>
+                  <ng-template #idSocio>
+                    <span> Número Socio </span>
+                    <ng-container *ngIf="item.numeroMigrado; else numMig">
+                    </ng-container>
+                    <ng-template #numMig>
+                      <span *ngIf="item.numeroMigrado"> Número Migrado </span>
+                    </ng-template>
+                  </ng-template>
 
-            </ion-badge>
-            <ion-badge *ngIf="item.fecha" [color]="getBadgeColor()" slot="end" mode="ios">
-              {{item.fecha}}
-            </ion-badge>
-            <ion-icon *ngIf="item.destinatario" slot="end" name="person" color="primary"></ion-icon>
-          </ion-item>
-        <ion-card-content  class=" ion-no-padding-bottom ion-text-left">
+                  <ion-text color="primary">{{
+                    item.cuenta || item.idSocio || item.numeroMigrado
+                  }}</ion-text>
+                </p>
+              </ion-label>
+            </ion-col>
+          </ion-row>
 
+          <ion-row>
+            <ion-col *ngIf="item.nombre">
+              Nombre
+              <p>
+                <ion-text color="primary">
+                  {{ item?.nombre | titlecase }}
+                </ion-text>
+              </p>
+            </ion-col>
 
-          <ion-grid class="ion-no-padding">
-            <ion-row *ngIf="!(item.abono || item.cargo)" >
-
-
-              <ion-col >
-                <ion-label  class="ion-no-margin ion-padding-end ion-text-end">
-                  <p>
-                    Cuenta
-                    <ion-text color="primary">{{ item.cuenta }}</ion-text>
-                  </p>
-
-                </ion-label>
-              </ion-col>
-            </ion-row>
-
-            <ion-row>
-              <ion-col *ngIf="item.nombre">
-                Nombre
+            <ion-col *ngIf="item.saldo || item.disponible">
+              <ion-label class="ion-text-end ion-padding-end">
+                Saldo
                 <p>
                   <ion-text color="primary">
-                    {{item?.nombre | titlecase}}
+                    {{ item?.saldo || item?.disponible | currency }}</ion-text
+                  >
+                </p>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              <ion-label *ngIf="item.intereses">
+                Interes
+                <p>
+                  <ion-text color="primary">
+                    <p>{{ item?.intereses | number: "1.2-2" }}%</p>
                   </ion-text>
                 </p>
-              </ion-col>
+              </ion-label>
 
+              <ion-label *ngIf="item.cargo">
+                cargo
+                <p>
+                  <ion-text color="primary">
+                    <p>{{ item?.cargo | currency }}</p>
+                  </ion-text>
+                </p>
+              </ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label *ngIf="item.iva" class="ion-text-end ion-padding-end">
+                IVA
+                <p>
+                  <ion-text color="primary">
+                    <p>{{ item?.iva | number: "1.0-2" }}%</p>
+                  </ion-text>
+                </p>
+              </ion-label>
 
-              <ion-col *ngIf="item.saldo || item.disponible">
-                <ion-label class="ion-text-end ion-padding-end">
-                  Saldo
-                  <p>
-                    <ion-text color="primary"> {{ (item?.saldo || item?.disponible) | currency }}</ion-text>
-                  </p>
-                </ion-label>
-              </ion-col>
-            </ion-row>
-
-
-            <ion-row >
-              <ion-col  >
-
-                <ion-label *ngIf="item.intereses">
-                  Interes
-                  <p>
-                    <ion-text color="primary">
-                      <p>{{item?.intereses | number: '1.2-2'}}%</p>
-                    </ion-text>
-                  </p>
-                </ion-label>
-
-                <ion-label *ngIf="item.cargo">
-                  cargo
-                  <p>
-                    <ion-text color="primary">
-                      <p>{{item?.cargo | currency }}</p>
-                    </ion-text>
-                  </p>
-                </ion-label>
-              </ion-col>
-              <ion-col  >
-
-                <ion-label *ngIf="item.iva" class="ion-text-end ion-padding-end" >
-                  IVA
-                  <p>
-                    <ion-text color="primary">
-                      <p>{{item?.iva | number: '1.0-2' }}%</p>
-                    </ion-text>
-                  </p>
-                </ion-label>
-
-                <ion-label *ngIf="item.abono" class="ion-text-end ion-padding-end" >
-                  Abono
-                  <p>
-                    <ion-text color="primary">
-                      <p>{{item?.abono | currency }}</p>
-                    </ion-text>
-                  </p>
-                </ion-label>
-
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-card-content>
-        <ion-ripple-effect></ion-ripple-effect>
-      </ion-label>
-    </ion-item>
-    <ion-item-options  side="end">
-        <ion-item-option color="medium" (click)='movementsOf(); $event.stopPropagation()'>
-          <ion-icon slot="top" name="heart"></ion-icon>
-          {{ 'movs' | titlecase }}
-        </ion-item-option>
-    </ion-item-options>
-  </ion-item-sliding>
-
-
-
+              <ion-label
+                *ngIf="item.abono"
+                class="ion-text-end ion-padding-end"
+              >
+                Abono
+                <p>
+                  <ion-text color="primary">
+                    <p>{{ item?.abono | currency }}</p>
+                  </ion-text>
+                </p>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+      <ion-ripple-effect></ion-ripple-effect>
+    </ion-label>
+  </ion-item>
+  <ion-item-options side="end">
+    <ion-item-option
+      color="medium"
+      (click)="movementsOf(); $event.stopPropagation()"
+    >
+      <ion-icon slot="top" name="heart"></ion-icon>
+      {{ "movs" | titlecase }}
+    </ion-item-option>
+  </ion-item-options>
+</ion-item-sliding>
